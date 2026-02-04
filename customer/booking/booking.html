@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charm Beauty | Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#FFE6EA]">
+
+<!-- Header -->
+<div class="bg-pink-500 h-24 flex items-center px-10">
+  <a href="main loged.html" class="text-white mr-6">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </a>
+  <img src="assets/logo.jpg" class="h-14" />
+</div>
+
+<!-- Content box -->
+<div class="max-w-7xl mx-auto mt-6 bg-white rounded-3xl shadow overflow-hidden">
+  <div class="flex min-h-[650px]">
+
+    <!-- Left panel -->
+    <div class="w-1/4 bg-[#FFE6EA] flex items-center justify-center">
+      <img src="assets/logo.jpg" class="w-48" />
+    </div>
+
+    <!-- Booking panel -->
+    <div class="w-3/4 p-12 relative">
+
+      <!-- Date -->
+      <div class="mb-6">
+        <label class="font-bold text-2xl">วันที่</label><br>
+        <input
+          id="datePicker"
+          type="date"
+          class="mt-2 bg-pink-100 border border-gray-400
+                 rounded-lg px-4 py-2 text-lg font-semibold"
+        />
+      </div>
+
+      <!-- Time slots -->
+      <div
+        id="timeSlots"
+        class="bg-gray-300 rounded-3xl p-5 space-y-2 w-[520px]"
+      ></div>
+
+      <!-- Booking button -->
+      <div class="absolute bottom-10 right-10">
+        <button
+          id="bookBtn"
+          disabled
+          class="px-10 py-3 rounded-full
+                 bg-gray-200 text-xl font-bold
+                 border cursor-not-allowed">
+          การจอง
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const timeSlotsContainer = document.getElementById('timeSlots');
+  const datePicker = document.getElementById('datePicker');
+  const bookBtn = document.getElementById('bookBtn');
+
+  const times = [
+    "10.00","11.00","12.00","13.00",
+    "14.00","15.00","16.00","17.00","18.00"
+  ];
+
+  let selectedTime = null;
+
+  function renderSlots() {
+    timeSlotsContainer.innerHTML = "";
+
+    times.forEach(time => {
+      const btn = document.createElement('button');
+
+      btn.className =
+        "w-full flex justify-between items-center " +
+        "px-6 py-2 rounded-lg border border-gray-600 " +
+        "bg-[#39C85A] text-black font-bold";
+
+      btn.innerHTML = `
+        <span class="text-xl">${time}</span>
+        <span class="text-xl">ว่าง</span>
+      `;
+
+      btn.onclick = () => selectTime(time, btn);
+      timeSlotsContainer.appendChild(btn);
+    });
+  }
+
+  function selectTime(time, btn) {
+    document.querySelectorAll('#timeSlots button').forEach(b => {
+      b.classList.remove('ring-4','ring-black');
+    });
+
+    btn.classList.add('ring-4','ring-black');
+    selectedTime = time;
+
+    bookBtn.disabled = false;
+    bookBtn.className =
+      "px-10 py-3 rounded-full bg-white text-xl font-bold border";
+  }
+
+  datePicker.addEventListener('change', () => {
+    selectedTime = null;
+    bookBtn.disabled = true;
+    bookBtn.className =
+      "px-10 py-3 rounded-full bg-gray-200 text-xl font-bold border cursor-not-allowed";
+    renderSlots();
+  });
+
+  bookBtn.addEventListener('click', () => {
+    if (!selectedTime || !datePicker.value) return;
+
+    window.location.href =
+      `booking1.html?date=${datePicker.value}&time=${selectedTime}`;
+  });
+
+  renderSlots();
+</script>
+
+</body>
+</html>

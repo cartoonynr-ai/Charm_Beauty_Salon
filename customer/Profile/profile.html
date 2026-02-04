@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>โปรไฟล์ลูกค้า - NS Charm Beauty Salon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-pink-100 font-sans min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <div class="bg-pink-400 p-4 flex items-center">
+    <button class="text-white text-xl mr-4">&larr;</button>
+    
+  </div>
+
+  <!-- Content Area -->
+  <div class="flex flex-1">
+
+    <!-- Sidebar -->
+    <div class="bg-pink-200 resize-x overflow-auto p-6 text-white flex flex-col items-center" style="width:250px;">
+      <img src="/ภาพ/Neil Tran (3).png" alt="NS Charm Logo"
+           class="w-40 h-40 rounded-full mb-10 object-cover" />
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex items-start justify-center">
+
+      <div class="bg-white w-full h-full p-8">
+
+        <!-- Title -->
+        <div class="flex justify-center mt-10">
+          <span class="font-semibold text-4xl">Your Profile</span>
+        </div>
+
+        <!-- Form -->
+        <div class="space-y-6 text-gray-700 mb-6 mt-10">
+
+          <!-- Username -->
+          <div>
+            <label class="block text-black font-semibold mb-2 text-2xl">Username</label>
+            <input type="text" placeholder="Customer001"
+              class="pl-5 bg-gray-200 shadow-md px-40 py-2 rounded-2xl
+                     text-base focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          </div>
+
+          <!-- Email + History -->
+          <div class="flex items-center">
+            <div>
+              <label class="block text-black font-semibold mb-2 text-2xl">Email</label>
+              <input type="text" placeholder="Customer001@gmail.com"
+                class="pl-5 bg-gray-200 shadow-md px-40 py-2 rounded-2xl
+                       text-base focus:outline-none focus:ring-2 focus:ring-pink-400" />
+            </div>
+
+            <!-- History Button -->
+            <button
+              class="ml-auto w-24 h-24 rounded-full mr-64
+                     bg-pink-300 text-white font-semibold text-sm shadow-md
+                     flex flex-col items-center justify-center hover:bg-pink-400">
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                   viewBox="0 0 24 24" stroke-width="2" stroke="white"
+                   class="w-10 h-10 mb-1">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              History
+            </button>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-black font-semibold mb-2 text-2xl">Phone Number</label>
+            <input type="text" placeholder="099-999-9999"
+              class="pl-5 bg-gray-200 shadow-md px-40 py-2 rounded-2xl
+                     text-base focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
