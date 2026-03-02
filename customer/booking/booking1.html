@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>การจอง</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .cal-day:hover:not(.disabled):not(.empty) { background: #fbcfe8; }
+    .cal-day.selected { background: #ec4899; color: white; }
+    .cal-day.today { border: 2px solid #ec4899; color: #ec4899; }
+    .cal-day.today.selected { color: white; border-color: #ec4899; }
+    .cal-day.disabled { color: #d1d5db; cursor: not-allowed; }
+    .cal-day.empty { cursor: default; }
+    .cal-header-day { text-align: center; font-size: 11px; font-weight: 700; color: #9d174d; padding: 4px 0; }
+  </style>
+</head>
+
+<body class="bg-pink-200 min-h-screen">
+
+  <!-- แถบบน -->
+  <div class="h-20 bg-pink-400 w-full flex items-center justify-end">
+    <div class="flex gap-4"></div>
+  </div>
+
+  <!-- Layout หลัก -->
+  <div class="flex">
+
+    <!-- แถบซ้าย -->
+    <div class="w-32 bg-pink-200">
+      <img src="/Photo/logo.jpg" class="h-50 w-auto object-contain">
+    </div>
+
+    <div class="relative mx-auto bg-white p-12 w-full min-h-screen">
+
+      <h1 class="text-2xl mt-8 text-center mb-2 font-bold">การจอง</h1>
+
+      <!-- GREY BOX -->
+      <div class="bg-gray-300 rounded-3xl p-12 max-w-6xl mx-auto shadow-lg min-h-[490px]">
+
+        <!-- DATE / TIME / SERVICE -->
+        <div class="grid grid-cols-3 gap-10 mb-6 text-center">
+
+          <!-- วันที่ -->
+          <div>
+            <label class="font-semibold block mb-2">วันที่</label>
+            <div class="relative inline-block w-full">
+              <!-- Display button -->
+              <button id="dateDisplay" onclick="toggleCalendar()"
+                class="w-full bg-pink-100 rounded-full px-5 py-2 border flex items-center justify-between gap-2 hover:bg-pink-200 transition-colors">
+                <span id="dateLabel" class="text-gray-500 text-sm font-semibold">เลือกวันที่</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+              </button>
+
+              <!-- Calendar Popup -->
+              <div id="calendarPopup"
+                class="hidden absolute top-11 left-0 z-50 bg-white border border-pink-200 rounded-2xl shadow-xl p-4"
+                style="width:260px;">
+
+                <!-- Month nav -->
+                <div class="flex items-center justify-between mb-3">
+                  <button onclick="prevMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">‹</button>
+                  <span id="monthLabel" class="font-bold text-gray-800 text-xs"></span>
+                  <button onclick="nextMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">›</button>
+                </div>
+
+                <!-- Day headers -->
+                <div class="calendar-grid mb-1">
+                  <div class="cal-header-day">อา</div>
+                  <div class="cal-header-day">จ</div>
+                  <div class="cal-header-day">อ</div>
+                  <div class="cal-header-day">พ</div>
+                  <div class="cal-header-day">พฤ</div>
+                  <div class="cal-header-day">ศ</div>
+                  <div class="cal-header-day">ส</div>
+                </div>
+
+                <!-- Days -->
+                <div class="calendar-grid" id="daysGrid"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- เวลา -->
+          <div>
+            <label class="font-semibold block mb-2">เวลา</label>
+            <select class="w-full bg-pink-100 rounded-full px-5 py-2 border">
+              <option>10.00</option><option>11.00</option><option>12.00</option>
+              <option>13.00</option><option>14.00</option><option>15.00</option>
+              <option>16.00</option><option>17.00</option><option>18.00</option>
+            </select>
+          </div>
+
+          <!-- บริการ -->
+          <div>
+            <label class="font-semibold block mb-2">บริการ</label>
+            <select id="service" class="w-full bg-pink-100 rounded-full px-5 py-2 border">
+              <option value="">เลือกบริการ</option>
+              <option value="nail">ทำเล็บ</option>
+              <option value="hair">ทำผม</option>
+              <option value="makeup">Makeup</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- OPTIONS -->
+        <h2 class="font-bold text-lg mb-2">ตัวเลือก</h2>
+        <div class="bg-pink-100 rounded-3xl p-6">
+
+          <!-- ทำเล็บ -->
+          <div id="nail" class="hidden flex">
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ต่อเล็บอะคริลิค</span><span>1500 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> เติมโคนอะคริลิค</span><span>800 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ถอดเล็บอะคริลิค</span><span>500 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทาสีเจลมือ / เท้า</span><span>900 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทาสีเจลมือและเท้า</span><span>100 บาท</span></label>
+            </div>
+            <div class="w-px bg-gray-400 mx-6"></div>
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ถอดเล็บ</span><span>100 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทาสี</span><span>200 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทาสีแฟนซี</span><span>200 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ไล่สี</span><span>200 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> เพ้นท์</span><span>50 บาท</span></label>
+              <label class="flex items-start gap-2">
+                <input type="radio" name="opt" value="other">
+                <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ทำผม -->
+          <div id="hair" class="hidden flex">
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ตัดผมชาย</span><span>100 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ตัดผมสตรี</span><span>150 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> สระ-ไดร์</span><span>100 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทำสีผม</span><span>350 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ไฮไลท์ / โอทโทน</span><span>350 บาท</span></label>
+            </div>
+            <div class="w-px bg-gray-400 mx-6"></div>
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ดัดลอน</span><span>300 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ยืดผม</span><span>400 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ทรีตเมนต์</span><span>100 บาท</span></label>
+              <label class="flex items-start gap-2">
+                <input type="radio" name="opt" value="other">
+                <span>อื่นๆ<br><small class="text-gray-600">(โปรดแนบรูปแบบที่ต้องการ)</small></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Makeup -->
+          <div id="makeup" class="hidden flex">
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าธรรมดา</span><span>250 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าไปงาน</span><span>350 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> รับปริญญา / เจ้าสาว</span><span>1500 บาท</span></label>
+            </div>
+            <div class="w-px bg-gray-400 mx-6"></div>
+            <div class="w-1/2 space-y-2">
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ถ่ายภาพ / พรีเวดดิ้ง</span><span>150 บาท</span></label>
+              <label class="flex justify-between"><span><input type="radio" name="opt"> ปรับบุคลิก</span><span>600 บาท</span></label>
+              <label class="flex items-start gap-2">
+                <input type="radio" name="opt" value="other">
+                <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="flex justify-end mr-60 gap-4 mt-8 items-center">
+        <input type="file" id="upload" class="hidden">
+        <button id="attachBtn" onclick="upload.click()" disabled
+          class="px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed">
+          แนบรูป
+        </button>
+        <a href="payment.html" class="px-8 py-2 rounded-full bg-pink-300 border font-semibold inline-block">
+          ยืนยัน
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ===== CALENDAR =====
+    const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+                      'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    let calYear = today.getFullYear();
+    let calMonth = today.getMonth();
+    let selectedDate = null;
+
+    function toggleCalendar() {
+      document.getElementById('calendarPopup').classList.toggle('hidden');
+    }
+
+    function closeCalendar() {
+      document.getElementById('calendarPopup').classList.add('hidden');
+    }
+
+    document.addEventListener('click', e => {
+      const popup = document.getElementById('calendarPopup');
+      const btn = document.getElementById('dateDisplay');
+      if (!popup.contains(e.target) && !btn.contains(e.target)) closeCalendar();
+    });
+
+    function prevMonth() {
+      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      document.getElementById('monthLabel').textContent = `${thMonths[calMonth]} ${calYear + 543}`;
+      const grid = document.getElementById('daysGrid');
+      grid.innerHTML = '';
+
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(calYear, calMonth, d);
+        const isToday = date.getTime() === today.getTime();
+        const isPast = date < today;
+        const isSelected = selectedDate && selectedDate.getTime() === date.getTime();
+
+        const el = document.createElement('div');
+        let cls = 'cal-day';
+        if (isPast) cls += ' disabled';
+        else if (isSelected) cls += ' selected' + (isToday ? ' today' : '');
+        else if (isToday) cls += ' today';
+
+        el.className = cls;
+        el.textContent = d;
+
+        if (!isPast) {
+          el.onclick = () => {
+            selectedDate = new Date(calYear, calMonth, d);
+            const label = `${d} ${thMonths[calMonth]} ${calYear + 543}`;
+            const dateLabel = document.getElementById('dateLabel');
+            dateLabel.textContent = label;
+            dateLabel.classList.remove('text-gray-500');
+            dateLabel.classList.add('text-gray-800');
+            renderCalendar();
+            closeCalendar();
+          };
+        }
+        grid.appendChild(el);
+      }
+    }
+
+    // ===== SERVICE OPTIONS =====
+    const service = document.getElementById('service');
+    const sections = { nail, hair, makeup };
+    const attachBtn = document.getElementById('attachBtn');
+
+    service.onchange = () => {
+      Object.values(sections).forEach(s => s.classList.add('hidden'));
+      attachBtn.disabled = true;
+      attachBtn.className = "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
+      if (sections[service.value]) sections[service.value].classList.remove('hidden');
+    };
+
+    document.addEventListener('change', e => {
+      if (e.target.name === 'opt') {
+        const enable = e.target.value === 'other';
+        attachBtn.disabled = !enable;
+        attachBtn.className = enable
+          ? "px-8 py-2 rounded-full bg-pink-200 border font-semibold"
+          : "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
+      }
+    });
+
+    // Init
+    renderCalendar();
+  </script>
+
+</body>
+</html>
