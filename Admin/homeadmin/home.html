@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charm Beauty & Salon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+ 
+<body class="bg-[#F4D6DB] text-gray-800">
+ 
+<!-- ================= HEADER ================= -->
+<header class="bg-pink-400 h-20 px-10 flex items-center">
+ 
+  <div class="flex items-center gap-4">
+    <img src="/Photo/logo.jpg" alt="Charm Beauty Logo" class="h-14 object-contain">
+  </div>
+ 
+  <nav class="flex-1 flex justify-center gap-12 text-white font-medium">
+    <a href="#" class="hover:underline cursor-pointer transition">หน้าหลัก</a>
+    <a href="#" class="hover:underline cursor-pointer transition">อัลบั้ม</a>
+    <a href="#" class="hover:underline cursor-pointer transition">การจอง</a>
+  </nav>
+ 
+  <div class="flex items-center gap-6 text-white">
+    <div class="relative">
+      <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2a6 6 0 00-6 6v4l-2 3h16l-2-3V8a6 6 0 00-6-6z"/>
+        <circle cx="12" cy="21" r="1.5"/>
+      </svg>
+      <span class="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full"></span>
+    </div>
+ 
+    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 22c0-4 4-6 8-6s8 2 8 6"/>
+    </svg>
+  </div>
+ 
+</header>
+<!-- ================= END HEADER ================= -->
+ 
+ 
+<!-- ================= ANNOUNCEMENT ================= -->
+<section class="pt-10">
+  <div class="max-w-6xl mx-auto bg-[#EED2D7] min-h-[200px] border border-gray-400 relative p-6 rounded-xl">
+ 
+    <div id="promoContainer"
+         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    </div>
+ 
+    <label class="absolute top-4 right-4 bg-gray-300 px-6 py-1 text-sm rounded cursor-pointer hover:bg-gray-400 shadow transition">
+      เพิ่มรูปโปรโมชั่น
+      <input type="file" accept="image/*" multiple class="hidden"
+             onchange="previewMultipleImages(event)">
+    </label>
+ 
+  </div>
+</section>
+ 
+ 
+<!-- ================= SHOP INFO ================= -->
+<section class="max-w-6xl mx-auto flex justify-center gap-10 py-16">
+ 
+  <div class="bg-white rounded-2xl p-8 w-[420px] shadow">
+    <h2 class="text-lg font-bold mb-2 text-center">Charm Beauty</h2>
+    <p>หน้ามอพะเยา ซอยข้างพีเจไนท์</p>
+    <p class="mt-2">เบอร์โทรติดต่อ : 085-6218731</p>
+  </div>
+ 
+  <div class="w-[420px] h-[240px] bg-gray-300 rounded-xl flex items-center justify-center text-gray-500">
+    แผนที่ตั้งร้าน
+  </div>
+ 
+</section>
+<!-- ================= END SHOP INFO ================= -->
+ 
+ 
+<!-- ================= PRICE ================= -->
+ 
+  <section>
+   <div class="text-center pb-6">
+ 
+  <h2 class="font-bold text-xl">ราคา</h2>
+ 
+  <div class="mt-2 text-sm">
+    <span onclick="showTab('price')" id="priceTab"
+      class="cursor-pointer text-pink-500 font-medium">
+      ราคา
+    </span>
+ 
+    <span class="mx-2 text-gray-400">|</span>
+ 
+    <span onclick="showTab('promo')" id="promoTab"
+      class="cursor-pointer text-gray-500">
+      โปรโมชั่น
+    </span>
+  </div>
+ 
+</div>
+ 
+<!-- ================= SECTION ================= -->
+<div id="priceSection">
+ 
+  <!-- ===== BLOCK 1 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+ 
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ"
+          class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+ 
+        <input type="text" placeholder="รายละเอียด"
+          class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+ 
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'preview1')">
+          <img id="preview1" alt="Preview 1" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="h-16 bg-[#EED2D7]"></div>
+ 
+ 
+  <!-- ===== BLOCK 2 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ" class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+        <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'preview2')">
+          <img id="preview2" alt="Preview 2" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="h-16 bg-[#EED2D7]"></div>
+ 
+ 
+  <!-- ===== BLOCK 3 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ" class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+        <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'preview3')">
+          <img id="preview3" alt="Preview 3" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+ 
+ 
+<!-- ===== PROMO SECTION (ยังว่างไว้ก่อน) ===== -->
+<div id="promoSection" class="hidden mt-10">
+ 
+    <!-- ===== BLOCK 1 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+ 
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ"
+          class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+ 
+        <input type="text" placeholder="รายละเอียด"
+          class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+ 
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'promoPreview1')">
+          <img id="promoPreview1" alt="Preview 1" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="h-16 bg-[#EED2D7]"></div>
+ 
+ 
+  <!-- ===== BLOCK 2 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ" class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+        <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'promoPreview2')">
+          <img id="promoPreview2" alt="Preview 2" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="h-16 bg-[#EED2D7]"></div>
+ 
+ 
+  <!-- ===== BLOCK 3 ===== -->
+  <div class="bg-gray-200 py-10">
+    <div class="max-w-6xl mx-auto flex gap-16">
+      <div class="w-1/2 space-y-2">
+        <input type="text" placeholder="หัวข้อ" class="w-32 bg-gray-300 rounded px-2 py-1 text-xs">
+        <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        <div class="space-y-1">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+          <input type="text" placeholder="รายละเอียด" class="w-full bg-gray-100 border rounded px-2 py-1 text-xs">
+        </div>
+      </div>
+ 
+      <div class="w-1/2 flex justify-center">
+        <label class="w-[420px] h-[300px] bg-gray-300 flex items-center justify-center text-gray-500 cursor-pointer relative overflow-hidden">
+          <input type="file" accept="image/*" class="hidden"
+                 onchange="previewImage(event, 'promoPreview3')">
+          <img id="promoPreview3" alt="Preview 3" class="absolute inset-0 w-full h-full object-cover hidden">
+          <span class="z-10">เลือกรูปภาพ</span>
+        </label>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+ 
+ 
+ 
+ 
+<!-- Buttons -->
+<div class="bg-[#EED2D7] py-6">
+  <div class="max-w-6xl mx-auto flex justify-end gap-4">
+    <button type="button" onclick="resetData()"
+    class="px-6 py-2 bg-gray-200 rounded-full text-xs shadow">
+    ยกเลิก
+    </button>
+   <button type="button" onclick="saveData()"
+    class="px-6 py-2 bg-white rounded-full text-xs shadow">
+    ยืนยัน
+    </button>
+  </div>
+</div>
+ 
+</section>
+<!-- ================= END PRICE ================= -->
+ 
+ 
+<!-- ================= FOOTER ================= -->
+<footer class="bg-pink-400 text-white py-12 mt-10">
+  <div class="flex justify-around text-sm">
+    <div>
+      <h4 class="font-bold mb-3">เกี่ยวกับ Charm Beauty & Salon</h4>
+      <p>เกี่ยวกับเรา</p>
+      <p>นโยบายความเป็นส่วนตัว</p>
+      <p>เงื่อนไขการใช้งาน</p>
+    </div>
+ 
+    <div>
+      <h4 class="font-bold mb-3">บริการลูกค้า</h4>
+      <p>ติดต่อเรา</p>
+      <p>บริการ Chat & Shop</p>
+      <p>คำถามที่พบบ่อย</p>
+    </div>
+ 
+    <div class="font-bold text-lg self-end">
+      Charm Beauty & Salon<br />
+      <span class="text-sm font-normal">ร้านทำเล็บ</span>
+    </div>
+  </div>
+</footer>
+<!-- ================= END FOOTER ================= -->
+ 
+ 
+<script src="Home.js"></script>
+ 
+</body>
+</html>
+ 
