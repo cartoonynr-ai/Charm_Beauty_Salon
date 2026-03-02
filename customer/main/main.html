@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Charm Beauty & Salon</title>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -13,37 +11,22 @@
 
 <!-- ================= HEADER ================= -->
 <header class="bg-pink-400 h-20 flex items-center justify-between px-10">
-  
-  <!-- Logo (ไฟล์จริง 348x348 แต่แสดงพอดี) -->
   <a href="index.html" class="flex items-center h-full">
-    <img
-      src="/Photo/logo.jpg"
-      alt="Charm Beauty Logo"
-      class="h-full max-h-[64px] w-auto object-contain"
-    />
+    <img src="/Photo/logo.jpg" alt="Charm Beauty Logo" class="h-full max-h-[64px] w-auto object-contain" />
   </a>
-
-  <!-- Sign in -->
   <button class="flex items-center gap-2 text-white">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
       <circle cx="12" cy="8" r="4"/>
       <path d="M4 22c0-4 4-6 8-6s8 2 8 6"/>
     </svg>
-    <a href="/customer/login/login.html">Sign in</a> <!--****Link Sign IN****-->
+    <a href="/customer/login/login.html">Sign in</a>
   </button>
-
 </header>
-<!-- ================= END HEADER ================= -->
 
 <!-- ================= HERO ================= -->
 <section class="w-full h-[420px]">
-  <img
-    src="/Photo/hero.jpg"
-    alt="Hero Banner"
-    class="w-full h-full object-cover"
-  />
+  <img src="/Photo/hero.jpg" alt="Hero Banner" class="w-full h-full object-cover" />
 </section>
-<!-- ================= END HERO ================= -->
 
 <!-- ================= INFO ================= -->
 <section class="flex justify-center gap-10 py-16">
@@ -54,12 +37,21 @@
     <p class="mt-2">เบอร์โทรติดต่อ : 085-6218731</p>
   </div>
 
-  <div class="w-[420px] h-[240px] bg-gray-200 rounded-xl flex items-center justify-center">
-    Google Map
+  <!-- Google Map Embed -->
+  <div class="w-[420px] h-[240px] rounded-xl overflow-hidden shadow">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d235.73922957049268!2d99.92304002022807!3d19.02731378955737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1sth!2sth!4v1772447138390!5m2!1sth!2sth"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      id="map-frame"
+    ></iframe>
   </div>
 
 </section>
-<!-- ================= END INFO ================= -->
 
 <!-- ================= PRICE ================= -->
 <section class="bg-white mx-auto max-w-6xl rounded-2xl shadow py-16 mb-20 text-center">
@@ -68,15 +60,12 @@
   <p class="text-pink-500 mb-10">
     <a href="/customer/main loged/main loged.html" class="font-semibold">ราคา</a>
     |
-    <a href="/customer/main loged promotion/main loged promotion.html" class="hover:underline text-pink-600">
-      โปรโมชั่น
-    </a>
+    <a href="/customer/main loged promotion/main loged promotion.html" class="hover:underline text-pink-600">โปรโมชั่น</a>
   </p>
 
-  <!-- ===== Pink Divider ===== -->
   <div class="w-full h-10 bg-pink-300 my-16"></div>
 
-  <!-- ===== Nail ===== -->
+  <!-- Nail -->
   <div class="flex justify-center gap-10 mb-20 items-center">
     <div class="w-[520px] text-left">
       <h3 class="text-pink-500 font-bold mb-4">ทำเล็บ</h3>
@@ -92,16 +81,13 @@
         <li class="flex justify-between"><span>ไล่สี</span><span>฿200</span></li>
         <li class="flex justify-between"><span>เพนท์ลาย เริ่มต้น</span><span>฿50</span></li>
       </ul>
-
     </div>
-
     <img src="/Photo/nail.jpg" class="w-[360px] rounded-xl shadow" />
   </div>
 
-  <!-- ===== Pink Divider ===== -->
   <div class="w-full h-10 bg-pink-300 my-16"></div>
 
-  <!-- ===== Hair ===== -->
+  <!-- Hair -->
   <div class="flex justify-center gap-10 mb-20 items-center">
     <div class="w-[520px] text-left">
       <h3 class="text-pink-500 font-bold mb-4">ทำผม</h3>
@@ -115,16 +101,13 @@
         <li class="flex justify-between"><span>ยืดผม</span><span>฿400-800</span></li>
         <li class="flex justify-between"><span>ทรีตเมนต์</span><span>฿80-150</span></li>
       </ul>
-
     </div>
-
     <img src="/Photo/hair.jpg" class="w-[360px] rounded-xl shadow" />
   </div>
 
-  <!-- ===== Pink Divider ===== -->
   <div class="w-full h-10 bg-pink-300 my-16"></div>
 
-  <!-- ===== Makeup ===== -->
+  <!-- Makeup -->
   <div class="flex justify-center gap-10 mb-20 items-center">
     <div class="w-[520px] text-left">
       <h3 class="text-pink-500 font-bold mb-4">แต่งหน้า</h3>
@@ -136,9 +119,7 @@
         <li class="flex justify-between"><span>แต่งหน้าเด็ก</span><span>฿20-80</span></li>
         <li class="flex justify-between"><span>แต่งหน้ารับปริญญา</span><span>฿500-900</span></li>
       </ul>
-
     </div>
-
     <img src="/Photo/makeup.jpg" class="w-[360px] rounded-xl shadow" />
   </div>
 
@@ -152,19 +133,22 @@
       <p>เกี่ยวกับเรา</p>
       <p>นโยบายความเป็นส่วนตัว</p>
     </div>
-
     <div>
       <h4 class="font-bold mb-2">บริการลูกค้า</h4>
       <p>ติดต่อเรา</p>
       <p>คำถามที่พบบ่อย</p>
     </div>
-
-    <div class="font-bold text-lg">
-      Charm Beauty & Salon
-    </div>
+    <div class="font-bold text-lg">Charm Beauty & Salon</div>
   </div>
 </footer>
-<!-- ================= END FOOTER ================= -->
+
+<script>
+  // แปลง short URL เป็น embed URL อัตโนมัติโดยใช้ place จาก link
+  // link: https://maps.app.goo.gl/mrgMQ79foycjR8Sf9
+  // ใช้ embed แบบ search query แทน เพราะ short URL redirect ไม่สามารถ fetch ได้
+  document.getElementById('map-frame').src =
+    "https://maps.google.com/maps?q=Charm+Beauty+Salon+Phayao&output=embed&z=16";
+</script>
 
 </body>
 </html>

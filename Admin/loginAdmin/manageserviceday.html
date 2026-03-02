@@ -2,241 +2,229 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - การจัดการข้อมูล</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Fahkwang', sans-serif; background: #FFE6EA; margin: 0; min-height: 100vh; }
+
+    .pill-select {
+      background: white; border: 1px solid #e5e7eb;
+      border-radius: 999px; padding: 6px 16px;
+      font-family: 'Fahkwang', sans-serif; font-size: 13px;
+      outline: none; cursor: pointer;
+    }
+    .pill-select:focus { box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6; }
+
+    .service-btn {
+      padding: 7px 22px; border-radius: 999px; border: 1.5px solid #f9a8d4;
+      background: white; font-family: 'Fahkwang', sans-serif;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+      color: #9d174d;
+    }
+    .service-btn:hover { background: #fce7f3; }
+    .service-btn.active {
+      background: #ec4899; color: white; border-color: #be185d;
+      box-shadow: 0 2px 8px rgba(236,72,153,0.3);
+    }
+
+    .option-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: white; border: 1px solid #fda4af;
+      border-radius: 999px; padding: 5px 12px 5px 14px; font-size: 13px;
+      cursor: pointer; transition: all 0.15s;
+      user-select: none;
+    }
+    .option-chip:hover { background: #fce7f3; }
+    .option-chip.selected { background: #ec4899; color: white; border-color: #be185d; }
+    .option-chip .tick {
+      width: 18px; height: 18px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+      background: rgba(255,255,255,0.3); color: white;
+    }
+    .option-chip:not(.selected) .tick { background: #fda4af; color: white; }
+
+    .add-circle {
+      width: 24px; height: 24px; background: #9ca3af;
+      border: none; border-radius: 50%; color: white;
+      font-size: 18px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.15s; flex-shrink: 0;
+    }
+    .add-circle:hover { background: #ec4899; }
+
+    .pill-input {
+      background: white; border: 1px solid #e5e7eb;
+      border-radius: 999px; padding: 5px 14px;
+      font-family: 'Fahkwang', sans-serif; font-size: 12px; outline: none;
+    }
+    .pill-input:focus { box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6; }
+
+    .btn-cancel {
+      background: white; border: 1px solid #d1d5db; border-radius: 10px;
+      padding: 9px 28px; font-family: 'Fahkwang', sans-serif;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .btn-cancel:hover { background: #f3f4f6; }
+    .btn-confirm {
+      background: #ec4899; color: white; border: 1px solid #be185d;
+      border-radius: 10px; padding: 9px 28px;
+      font-family: 'Fahkwang', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(236,72,153,0.3);
+    }
+    .btn-confirm:hover { background: #db2777; }
+
+    .toast {
+      position: fixed; bottom: 28px; right: 28px; color: white;
+      padding: 12px 22px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      opacity: 0; transition: opacity 0.3s; z-index: 100; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+  </style>
 </head>
+<body>
 
-<body class="bg-pink-200 min-h-screen">
-
-  <!-- แถบบน -->
-  <div class="h-20 bg-pink-400 w-full flex items-center justify-end  ">
-      <div class="flex gap-4 ">
-
+  <!-- Header -->
+  <div style="background:#f472b6; height:52px; display:flex; align-items:center; padding:0 20px;">
+    <button onclick="window.location.href='Admin Price edit.html'" style="background:none; border:none; color:white; font-size:28px; font-weight:bold; cursor:pointer;">&#8249;</button>
   </div>
 
-  </div>
+  <div style="display:flex; min-height:calc(100vh - 52px);">
 
-  <!-- Layout หลัก -->
-  <div class="flex">
-
-    <!-- แถบซ้าย -->
-    <div class="w-32 bg-pink-200">
-        <img src="/Photo/logo.jpg" class="h-50 w-auto object-contain">
+    <!-- Logo -->
+    <div style="width:160px; min-width:160px; padding:24px 16px; display:flex; align-items:flex-start; justify-content:center;">
+      <img src="/Photo/logo.jpg" alt="Ms Charm" style="width:120px; object-fit:contain;" onerror="this.style.display='none'" />
     </div>
 
- <div class="relative mx-auto bg-white  p-12 w-full min-h-screen">
+    <!-- Content -->
+    <div style="flex:1; padding:32px 40px 40px;">
+      <h1 style="text-align:center; font-size:1.5rem; font-weight:700; color:#1a1a1a; margin:0 0 28px 0;">การจัดการข้อมูล</h1>
 
+      <!-- Grey Box -->
+      <div style="background:#e0e0e0; border-radius:20px; padding:28px 32px; max-width:780px; margin:0 auto; min-height:320px;">
 
-    <h1 class="text-2xl mt-8  text-center mb-2 font-bold">การจอง</h1>
-
-
-    <!-- GREY BOX -->
-<div class="bg-gray-300 rounded-3xl p-12 max-w-6xl mx-auto shadow-lg min-h-[490px]">
-
-      <!-- DATE / TIME / SERVICE -->
-      <div class="grid grid-cols-3 gap-10 mb-6 text-center">
-        <div>
-          <label class="font-semibold block mb-2">วันที่</label>
-          <input type="date"
-            class="w-full bg-pink-100 rounded-full px-5 py-2 border">
-        </div>
-
-        <div>
-          <label class="font-semibold block mb-2">เวลา</label>
-          <select class="w-full bg-pink-100 rounded-full px-5 py-2 border">
-            <option>10.00</option><option>11.00</option><option>12.00</option>
-            <option>13.00</option><option>14.00</option><option>15.00</option>
-            <option>16.00</option><option>17.00</option><option>18.00</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="font-semibold block mb-2">บริการ</label>
-          <select id="service"
-            class="w-full bg-pink-100 rounded-full px-5 py-2 border">
-            <option value="">เลือกบริการ</option>
-            <option value="nail">ทำเล็บ</option>
-            <option value="hair">ทำผม</option>
-            <option value="makeup">Makeup</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- OPTIONS -->
-      <h2 class="font-bold text-lg mb-2">ตัวเลือก</h2>
-
-      <div class="bg-pink-100 rounded-3xl p-6">
-
-        <!-- ทำเล็บ -->
-        <div id="nail" class="hidden flex">
-          <div class="w-1/2 space-y-2">
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ต่อเล็บอะคริลิค</span><span>1500 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> เติมโคนอะคริลิค</span><span>800 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ถอดเล็บอะคริลิค</span><span>500 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ทาสีเจลมือ / เท้า</span><span>900 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ทาสีเจลมือและเท้า</span><span>100 บาท</span>
-            </label>
-          </div>
-
-          <div class="w-px bg-gray-400 mx-6"></div>
-
-          <div class="w-1/2 space-y-2">
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ถอดเล็บ</span><span>100 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ทาสี</span><span>200 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ทาสีแฟนซี</span><span>200 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> ไล่สี</span><span>200 บาท</span>
-            </label>
-            <label class="flex justify-between">
-              <span><input type="radio" name="opt"> เพ้นท์</span><span>50 บาท</span>
-            </label>
-            <label class="flex items-start gap-2">
-              <input type="radio" name="opt" value="other">
-              <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
-            </label>
+        <!-- บริการ (single select) -->
+        <div style="margin-bottom:24px; text-align:center;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#374151; margin-bottom:12px;">บริการ</label>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+            <button class="service-btn active" onclick="selectService('nail', this)">💅 ทำเล็บ</button>
+            <button class="service-btn" onclick="selectService('hair', this)">✂️ ทำผม</button>
+            <button class="service-btn" onclick="selectService('makeup', this)">💄 แต่งหน้า</button>
           </div>
         </div>
 
-<!-- ทำผม -->
-<div id="hair" class="hidden flex">
-
-  <!-- LEFT -->
-  <div class="w-1/2 space-y-2">
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ตัดผมชาย</span>
-      <span>100 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ตัดผมสตรี</span>
-      <span>150 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> สระ-ไดร์</span>
-      <span>100 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ทำสีผม</span>
-      <span>350 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ไฮไลท์ / โอทโทน</span>
-      <span>350 บาท</span>
-    </label>
-  </div>
-
-  <!-- DIVIDER -->
-  <div class="w-px bg-gray-400 mx-6"></div>
-
-  <!-- RIGHT -->
-  <div class="w-1/2 space-y-2">
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ดัดลอน</span>
-      <span>300 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ยืดผม</span>
-      <span>400 บาท</span>
-    </label>
-
-    <label class="flex justify-between">
-      <span><input type="radio" name="opt"> ทรีตเมนต์</span>
-      <span>100 บาท</span>
-    </label>
-
-    <label class="flex items-start gap-2">
-      <input type="radio" name="opt" value="other">
-      <span>
-        อื่นๆ<br>
-        <small class="text-gray-600">(โปรดแนบรูปแบบที่ต้องการ)</small>
-      </span>
-    </label>
-  </div>
-</div>
-        <!-- Makeup -->
-        <div id="makeup" class="hidden flex">
-          <div class="w-1/2 space-y-2">
-            <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าธรรมดา</span><span>250 บาท</span></label>
-            <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าไปงาน</span><span>350 บาท</span></label>
-            <label class="flex justify-between"><span><input type="radio" name="opt"> รับปริญญา / เจ้าสาว</span><span>1500 บาท</span></label>
-          </div>
-
-          <div class="w-px bg-gray-400 mx-6"></div>
-
-          <div class="w-1/2 space-y-2">
-            <label class="flex justify-between"><span><input type="radio" name="opt"> ถ่ายภาพ / พรีเวดดิ้ง</span><span>150 บาท</span></label>
-            <label class="flex justify-between"><span><input type="radio" name="opt"> ปรับบุคลิก</span><span>600 บาท</span></label>
-            <label class="flex items-start gap-2">
-              <input type="radio" name="opt" value="other">
-              <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
-            </label>
+        <!-- ตัวเลือกเพิ่มเติม -->
+        <div>
+          <h3 style="font-size:13px; font-weight:700; color:#374151; margin:0 0 12px 0;">ตัวเลือกเพิ่มเติม</h3>
+          <div style="background:#fce7f3; border-radius:14px; padding:18px 20px; min-height:120px;">
+            <div id="options-area" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;"></div>
+            <!-- add custom -->
+            <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+              <input type="text" class="pill-input" id="custom-input"
+                placeholder="เพิ่มตัวเลือกอื่น..."
+                style="max-width:240px;"
+                onkeydown="if(event.key==='Enter') addCustom()" />
+              <button class="add-circle" onclick="addCustom()">+</button>
+            </div>
           </div>
         </div>
 
       </div>
+
+      <!-- Buttons -->
+      <div style="display:flex; justify-content:flex-end; gap:12px; max-width:780px; margin:24px auto 0;">
+        <button class="btn-cancel" onclick="resetForm()">ยกเลิก</button>
+        <button class="btn-confirm" onclick="saveData()">ยืนยัน</button>
+      </div>
     </div>
-
-    <!-- BOTTOM -->
- <div class="flex justify-end mr-60 gap-4 mt-8 items-center">
-      <input type="file" id="upload" class="hidden">
-
-      <button id="attachBtn"
-        onclick="upload.click()"
-        disabled
-        class="px-8 py-2  rounded-full bg-gray-200 border font-semibold cursor-not-allowed">
-        แนบรูป
-      </button>
-
-<a href="payment.html"
-   class="px-8 py-2  rounded-full bg-pink-300 border font-semibold inline-block">
-  ยืนยัน
-</a>
-    </div>
-
   </div>
-</section>
 
-<script>
-const service = document.getElementById('service');
-const sections = { nail, hair, makeup };
-const attachBtn = document.getElementById('attachBtn');
+  <div class="toast" id="toast"></div>
 
-service.onchange = () => {
-  Object.values(sections).forEach(s => s.classList.add('hidden'));
-  attachBtn.disabled = true;
-  attachBtn.className = attachBtn.className.replace('bg-pink-200','bg-gray-200');
-  if (sections[service.value]) sections[service.value].classList.remove('hidden');
-};
+  <script>
+    const serviceData = {
+      nail: {
+        label: 'ทำเล็บ',
+        options: ['ต่อเล็บอะคริลิก', 'เติมโคนอะคริลิก', 'ถอดเล็บอะคริลิก',
+          'ทาสีเจล', 'ทาสีเจล มือ+เท้า', 'ถอดสีเจล',
+          'ทาสีธรรมดา', 'เฟรนช์', 'ไล่สี', 'เพนท์ลาย']
+      },
+      hair: {
+        label: 'ทำผม',
+        options: ['ตัดผมชาย', 'ตัดผมสตรี', 'สระ-ไดร์', 'ทำสีพื้นฐาน',
+          'โกรกสี', 'ดัดลอน', 'ยืดผม', 'ทรีตเมนต์']
+      },
+      makeup: {
+        label: 'แต่งหน้า',
+        options: ['แต่งหน้าธรรมชาติ / ทุกวัน', 'แต่งหน้าออกงาน / อีเวนต์',
+          'Soft Glam / วัยรุ่น', 'แต่งหน้าเจ้าสาว', 'แต่งหน้าเด็ก', 'แต่งหน้ารับปริญญา']
+      }
+    };
 
-document.addEventListener('change', e => {
-  if (e.target.name === 'opt') {
-    const enable = e.target.value === 'other';
-    attachBtn.disabled = !enable;
-    attachBtn.className = enable
-      ? "px-8 py-2 rounded-full bg-pink-200 border font-semibold"
-      : "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
-  }
-});
-</script>
+    let currentService = 'nail';
+    // selected options per service: { nail: Set, hair: Set, makeup: Set }
+    const selectedOptions = { nail: new Set(), hair: new Set(), makeup: new Set() };
 
+    function selectService(key, btn) {
+      currentService = key;
+      document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderOptions();
+    }
+
+    function renderOptions() {
+      const area = document.getElementById('options-area');
+      area.innerHTML = '';
+      const opts = serviceData[currentService].options;
+      opts.forEach((opt, i) => {
+        const chip = document.createElement('div');
+        const isSelected = selectedOptions[currentService].has(i);
+        chip.className = 'option-chip' + (isSelected ? ' selected' : '');
+        chip.innerHTML = `<span>${opt}</span><span class="tick">${isSelected ? '✓' : '+'}</span>`;
+        chip.onclick = () => {
+          if (selectedOptions[currentService].has(i)) {
+            selectedOptions[currentService].delete(i);
+          } else {
+            selectedOptions[currentService].add(i);
+          }
+          renderOptions();
+        };
+        area.appendChild(chip);
+      });
+    }
+
+    function addCustom() {
+      const input = document.getElementById('custom-input');
+      const val = input.value.trim();
+      if (!val) return;
+      serviceData[currentService].options.push(val);
+      selectedOptions[currentService].add(serviceData[currentService].options.length - 1);
+      input.value = '';
+      renderOptions();
+    }
+
+    function saveData() {
+      const hasAny = Object.values(selectedOptions).some(s => s.size > 0);
+      if (!hasAny) { showToast('❌ กรุณาเลือกตัวเลือกอย่างน้อย 1 รายการ', '#ef4444'); return; }
+      showToast('✅ บันทึกสำเร็จ', '#10b981');
+    }
+
+    function resetForm() {
+      Object.keys(selectedOptions).forEach(k => selectedOptions[k].clear());
+      renderOptions();
+    }
+
+    function showToast(msg, color) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.style.background = color;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    renderOptions();
+  </script>
 </body>
 </html>

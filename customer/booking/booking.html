@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Charm Beauty | Booking</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .cal-day:hover:not(.disabled):not(.empty) { background: #fbcfe8; }
+    .cal-day.selected { background: #ec4899; color: white; }
+    .cal-day.today { border: 2px solid #ec4899; color: #ec4899; }
+    .cal-day.today.selected { color: white; border-color: #ec4899; }
+    .cal-day.disabled { color: #d1d5db; cursor: not-allowed; }
+    .cal-day.empty { cursor: default; }
+    .cal-header-day { text-align: center; font-size: 12px; font-weight: 700; color: #9d174d; padding: 4px 0; }
+  </style>
 </head>
 
 <body class="bg-[#FFE6EA]">
@@ -12,11 +28,10 @@
 <!-- Header -->
 <div class="bg-pink-500 h-24 flex items-center px-10">
   <a href="main loged.html" class="text-white mr-6">
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <path d="M15 18l-6-6 6-6"/>
     </svg>
   </a>
- 
 </div>
 
 <!-- Content box -->
@@ -33,29 +48,55 @@
 
       <!-- Date -->
       <div class="mb-6">
-        <label class="font-bold text-2xl">วันที่</label><br>
-        <input
-          id="datePicker"
-          type="date"
-          class="mt-2 bg-pink-100 border border-gray-400
-                 rounded-lg px-4 py-2 text-lg font-semibold"
-        />
+        <label class="font-bold text-2xl block mb-2">วันที่</label>
+        <div class="relative inline-block">
+
+          <!-- Display button -->
+          <button id="dateDisplay" onclick="toggleCalendar()"
+            class="bg-pink-100 border border-gray-400 rounded-lg px-5 py-2 text-lg font-semibold flex items-center gap-3 hover:bg-pink-200 transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            <span id="dateLabel" class="text-gray-500">เลือกวันที่</span>
+          </button>
+
+          <!-- Calendar Popup -->
+          <div id="calendarPopup"
+            class="hidden absolute top-12 left-0 z-50 bg-white border border-pink-200 rounded-2xl shadow-xl p-4"
+            style="width:280px;">
+
+            <!-- Month nav -->
+            <div class="flex items-center justify-between mb-3">
+              <button onclick="prevMonth()" class="w-8 h-8 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-xl">‹</button>
+              <span id="monthLabel" class="font-bold text-gray-800 text-sm"></span>
+              <button onclick="nextMonth()" class="w-8 h-8 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-xl">›</button>
+            </div>
+
+            <!-- Day headers -->
+            <div class="calendar-grid mb-1">
+              <div class="cal-header-day">อา</div>
+              <div class="cal-header-day">จ</div>
+              <div class="cal-header-day">อ</div>
+              <div class="cal-header-day">พ</div>
+              <div class="cal-header-day">พฤ</div>
+              <div class="cal-header-day">ศ</div>
+              <div class="cal-header-day">ส</div>
+            </div>
+
+            <!-- Days grid -->
+            <div class="calendar-grid" id="daysGrid"></div>
+
+          </div>
+        </div>
       </div>
 
       <!-- Time slots -->
-      <div
-        id="timeSlots"
-        class="bg-gray-300 rounded-3xl p-5 space-y-2 w-[520px]"
-      ></div>
+      <div id="timeSlots" class="bg-gray-300 rounded-3xl p-5 space-y-2 w-[520px]"></div>
 
       <!-- Booking button -->
       <div class="absolute bottom-10 right-10">
-        <button
-          id="bookBtn"
-          disabled
-          class="px-10 py-3 rounded-full
-                 bg-gray-200 text-xl font-bold
-                 border cursor-not-allowed">
+        <button id="bookBtn" disabled
+          class="px-10 py-3 rounded-full bg-gray-200 text-xl font-bold border cursor-not-allowed">
           การจอง
         </button>
       </div>
@@ -65,66 +106,127 @@
 </div>
 
 <script>
-  const timeSlotsContainer = document.getElementById('timeSlots');
-  const datePicker = document.getElementById('datePicker');
-  const bookBtn = document.getElementById('bookBtn');
+  const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+                    'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const times = ["10.00","11.00","12.00","13.00","14.00","15.00","16.00","17.00","18.00"];
 
-  const times = [
-    "10.00","11.00","12.00","13.00",
-    "14.00","15.00","16.00","17.00","18.00"
-  ];
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
+  let calYear = today.getFullYear();
+  let calMonth = today.getMonth();
+  let selectedDate = null;
   let selectedTime = null;
 
-  function renderSlots() {
-    timeSlotsContainer.innerHTML = "";
+  // ===== CALENDAR =====
+  function toggleCalendar() {
+    document.getElementById('calendarPopup').classList.toggle('hidden');
+  }
 
+  function closeCalendar() {
+    document.getElementById('calendarPopup').classList.add('hidden');
+  }
+
+  document.addEventListener('click', e => {
+    const popup = document.getElementById('calendarPopup');
+    const btn = document.getElementById('dateDisplay');
+    if (!popup.contains(e.target) && !btn.contains(e.target)) closeCalendar();
+  });
+
+  function prevMonth() {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  }
+
+  function nextMonth() {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    document.getElementById('monthLabel').textContent = `${thMonths[calMonth]} ${calYear + 543}`;
+    const grid = document.getElementById('daysGrid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty';
+      grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(calYear, calMonth, d);
+      const isToday = date.getTime() === today.getTime();
+      const isPast = date < today;
+      const isSelected = selectedDate &&
+        selectedDate.getTime() === date.getTime();
+
+      const el = document.createElement('div');
+      let cls = 'cal-day';
+      if (isPast) cls += ' disabled';
+      else if (isSelected) cls += ' selected' + (isToday ? ' today' : '');
+      else if (isToday) cls += ' today';
+
+      el.className = cls;
+      el.textContent = d;
+
+      if (!isPast) {
+        el.onclick = () => {
+          selectedDate = new Date(calYear, calMonth, d);
+          const label = `${d} ${thMonths[calMonth]} ${calYear + 543}`;
+          document.getElementById('dateLabel').textContent = label;
+          document.getElementById('dateLabel').classList.remove('text-gray-500');
+          document.getElementById('dateLabel').classList.add('text-gray-800');
+          renderCalendar();
+          closeCalendar();
+          selectedTime = null;
+          document.querySelectorAll('#timeSlots button').forEach(b => b.classList.remove('ring-4','ring-black'));
+          updateBookBtn();
+        };
+      }
+      grid.appendChild(el);
+    }
+  }
+
+  // ===== TIME SLOTS =====
+  function renderSlots() {
+    const container = document.getElementById('timeSlots');
+    container.innerHTML = '';
     times.forEach(time => {
       const btn = document.createElement('button');
-
-      btn.className =
-        "w-full flex justify-between items-center " +
-        "px-6 py-2 rounded-lg border border-gray-600 " +
-        "bg-[#39C85A] text-black font-bold";
-
-      btn.innerHTML = `
-        <span class="text-xl">${time}</span>
-        <span class="text-xl">ว่าง</span>
-      `;
-
-      btn.onclick = () => selectTime(time, btn);
-      timeSlotsContainer.appendChild(btn);
+      btn.className = "w-full flex justify-between items-center px-6 py-2 rounded-lg border border-gray-600 bg-[#39C85A] text-black font-bold";
+      btn.innerHTML = `<span class="text-xl">${time}</span><span class="text-xl">ว่าง</span>`;
+      btn.onclick = () => {
+        document.querySelectorAll('#timeSlots button').forEach(b => b.classList.remove('ring-4','ring-black'));
+        btn.classList.add('ring-4','ring-black');
+        selectedTime = time;
+        updateBookBtn();
+      };
+      container.appendChild(btn);
     });
   }
 
-  function selectTime(time, btn) {
-    document.querySelectorAll('#timeSlots button').forEach(b => {
-      b.classList.remove('ring-4','ring-black');
-    });
-
-    btn.classList.add('ring-4','ring-black');
-    selectedTime = time;
-
-    bookBtn.disabled = false;
-    bookBtn.className =
-      "px-10 py-3 rounded-full bg-white text-xl font-bold border";
+  function updateBookBtn() {
+    const btn = document.getElementById('bookBtn');
+    const ready = selectedDate && selectedTime;
+    btn.disabled = !ready;
+    btn.className = ready
+      ? "px-10 py-3 rounded-full bg-white text-xl font-bold border hover:bg-pink-100 transition-colors"
+      : "px-10 py-3 rounded-full bg-gray-200 text-xl font-bold border cursor-not-allowed";
   }
 
-  datePicker.addEventListener('change', () => {
-    selectedTime = null;
-    bookBtn.disabled = true;
-    bookBtn.className =
-      "px-10 py-3 rounded-full bg-gray-200 text-xl font-bold border cursor-not-allowed";
-    renderSlots();
+  document.getElementById('bookBtn').addEventListener('click', () => {
+    if (!selectedDate || !selectedTime) return;
+    const y = selectedDate.getFullYear();
+    const m = String(selectedDate.getMonth()+1).padStart(2,'0');
+    const d = String(selectedDate.getDate()).padStart(2,'0');
+    window.location.href = `booking1.html?date=${y}-${m}-${d}&time=${selectedTime}`;
   });
 
-  bookBtn.addEventListener('click', () => {
-    if (!selectedTime || !datePicker.value) return;
-
-    window.location.href =
-      `booking1.html?date=${datePicker.value}&time=${selectedTime}`;
-  });
-
+  renderCalendar();
   renderSlots();
 </script>
 
