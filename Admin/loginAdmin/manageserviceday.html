@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-pink-200 min-h-screen">
+
+  <!-- แถบบน -->
+  <div class="h-20 bg-pink-400 w-full flex items-center justify-end  ">
+      <div class="flex gap-4 ">
+
+  </div>
+
+  </div>
+
+  <!-- Layout หลัก -->
+  <div class="flex">
+
+    <!-- แถบซ้าย -->
+    <div class="w-32 bg-pink-200">
+        <img src="/Photo/logo.jpg" class="h-50 w-auto object-contain">
+    </div>
+
+ <div class="relative mx-auto bg-white  p-12 w-full min-h-screen">
+
+
+    <h1 class="text-2xl mt-8  text-center mb-2 font-bold">การจอง</h1>
+
+
+    <!-- GREY BOX -->
+<div class="bg-gray-300 rounded-3xl p-12 max-w-6xl mx-auto shadow-lg min-h-[490px]">
+
+      <!-- DATE / TIME / SERVICE -->
+      <div class="grid grid-cols-3 gap-10 mb-6 text-center">
+        <div>
+          <label class="font-semibold block mb-2">วันที่</label>
+          <input type="date"
+            class="w-full bg-pink-100 rounded-full px-5 py-2 border">
+        </div>
+
+        <div>
+          <label class="font-semibold block mb-2">เวลา</label>
+          <select class="w-full bg-pink-100 rounded-full px-5 py-2 border">
+            <option>10.00</option><option>11.00</option><option>12.00</option>
+            <option>13.00</option><option>14.00</option><option>15.00</option>
+            <option>16.00</option><option>17.00</option><option>18.00</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="font-semibold block mb-2">บริการ</label>
+          <select id="service"
+            class="w-full bg-pink-100 rounded-full px-5 py-2 border">
+            <option value="">เลือกบริการ</option>
+            <option value="nail">ทำเล็บ</option>
+            <option value="hair">ทำผม</option>
+            <option value="makeup">Makeup</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- OPTIONS -->
+      <h2 class="font-bold text-lg mb-2">ตัวเลือก</h2>
+
+      <div class="bg-pink-100 rounded-3xl p-6">
+
+        <!-- ทำเล็บ -->
+        <div id="nail" class="hidden flex">
+          <div class="w-1/2 space-y-2">
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ต่อเล็บอะคริลิค</span><span>1500 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> เติมโคนอะคริลิค</span><span>800 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ถอดเล็บอะคริลิค</span><span>500 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ทาสีเจลมือ / เท้า</span><span>900 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ทาสีเจลมือและเท้า</span><span>100 บาท</span>
+            </label>
+          </div>
+
+          <div class="w-px bg-gray-400 mx-6"></div>
+
+          <div class="w-1/2 space-y-2">
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ถอดเล็บ</span><span>100 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ทาสี</span><span>200 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ทาสีแฟนซี</span><span>200 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> ไล่สี</span><span>200 บาท</span>
+            </label>
+            <label class="flex justify-between">
+              <span><input type="radio" name="opt"> เพ้นท์</span><span>50 บาท</span>
+            </label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="opt" value="other">
+              <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
+            </label>
+          </div>
+        </div>
+
+<!-- ทำผม -->
+<div id="hair" class="hidden flex">
+
+  <!-- LEFT -->
+  <div class="w-1/2 space-y-2">
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ตัดผมชาย</span>
+      <span>100 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ตัดผมสตรี</span>
+      <span>150 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> สระ-ไดร์</span>
+      <span>100 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ทำสีผม</span>
+      <span>350 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ไฮไลท์ / โอทโทน</span>
+      <span>350 บาท</span>
+    </label>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="w-px bg-gray-400 mx-6"></div>
+
+  <!-- RIGHT -->
+  <div class="w-1/2 space-y-2">
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ดัดลอน</span>
+      <span>300 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ยืดผม</span>
+      <span>400 บาท</span>
+    </label>
+
+    <label class="flex justify-between">
+      <span><input type="radio" name="opt"> ทรีตเมนต์</span>
+      <span>100 บาท</span>
+    </label>
+
+    <label class="flex items-start gap-2">
+      <input type="radio" name="opt" value="other">
+      <span>
+        อื่นๆ<br>
+        <small class="text-gray-600">(โปรดแนบรูปแบบที่ต้องการ)</small>
+      </span>
+    </label>
+  </div>
+</div>
+        <!-- Makeup -->
+        <div id="makeup" class="hidden flex">
+          <div class="w-1/2 space-y-2">
+            <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าธรรมดา</span><span>250 บาท</span></label>
+            <label class="flex justify-between"><span><input type="radio" name="opt"> แต่งหน้าไปงาน</span><span>350 บาท</span></label>
+            <label class="flex justify-between"><span><input type="radio" name="opt"> รับปริญญา / เจ้าสาว</span><span>1500 บาท</span></label>
+          </div>
+
+          <div class="w-px bg-gray-400 mx-6"></div>
+
+          <div class="w-1/2 space-y-2">
+            <label class="flex justify-between"><span><input type="radio" name="opt"> ถ่ายภาพ / พรีเวดดิ้ง</span><span>150 บาท</span></label>
+            <label class="flex justify-between"><span><input type="radio" name="opt"> ปรับบุคลิก</span><span>600 บาท</span></label>
+            <label class="flex items-start gap-2">
+              <input type="radio" name="opt" value="other">
+              <span>อื่นๆ<br><small>(โปรดแนบรูป)</small></span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+ <div class="flex justify-end mr-60 gap-4 mt-8 items-center">
+      <input type="file" id="upload" class="hidden">
+
+      <button id="attachBtn"
+        onclick="upload.click()"
+        disabled
+        class="px-8 py-2  rounded-full bg-gray-200 border font-semibold cursor-not-allowed">
+        แนบรูป
+      </button>
+
+<a href="payment.html"
+   class="px-8 py-2  rounded-full bg-pink-300 border font-semibold inline-block">
+  ยืนยัน
+</a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const service = document.getElementById('service');
+const sections = { nail, hair, makeup };
+const attachBtn = document.getElementById('attachBtn');
+
+service.onchange = () => {
+  Object.values(sections).forEach(s => s.classList.add('hidden'));
+  attachBtn.disabled = true;
+  attachBtn.className = attachBtn.className.replace('bg-pink-200','bg-gray-200');
+  if (sections[service.value]) sections[service.value].classList.remove('hidden');
+};
+
+document.addEventListener('change', e => {
+  if (e.target.name === 'opt') {
+    const enable = e.target.value === 'other';
+    attachBtn.disabled = !enable;
+    attachBtn.className = enable
+      ? "px-8 py-2 rounded-full bg-pink-200 border font-semibold"
+      : "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
+  }
+});
+</script>
+
+</body>
+</html>

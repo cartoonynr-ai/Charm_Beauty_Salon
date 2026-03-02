@@ -2,31 +2,36 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Charm Beauty | Booking</title>
+  <title>Profile</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-[#FFE6EA] text-gray-800">
+<body class="bg-pink-200 min-h-screen">
 
-<!-- HEADER -->
-<header class="bg-pink-400 h-20 flex items-center px-6 gap-4">
-  <a href="booking.html" class="text-white">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M15 18l-6-6 6-6"/>
-    </svg>
-  </a>
-  <img src="assets/logo.jpg" class="h-12" />
-</header>
+  <!-- แถบบน -->
+  <div class="h-20 bg-pink-400 w-full flex items-center justify-end  ">
+      <div class="flex gap-4 ">
 
-<!-- CONTENT -->
-<section class="flex justify-center py-16">
-  <div class="bg-white w-[1100px] rounded-xl shadow p-12">
+  </div>
 
-    <h1 class="text-center text-2xl font-bold mb-6">การจอง</h1>
+  </div>
+
+  <!-- Layout หลัก -->
+  <div class="flex">
+
+    <!-- แถบซ้าย -->
+    <div class="w-32 bg-pink-200">
+        <img src="/Photo/logo.jpg" class="h-50 w-auto object-contain">
+    </div>
+
+ <div class="relative mx-auto bg-white  p-12 w-full min-h-screen">
+
+
+    <h1 class="text-2xl mt-8  text-center mb-2 font-bold">การจอง</h1>
+
 
     <!-- GREY BOX -->
-    <div class="bg-gray-300 rounded-2xl p-8">
+<div class="bg-gray-300 rounded-3xl p-12 max-w-6xl mx-auto shadow-lg min-h-[490px]">
 
       <!-- DATE / TIME / SERVICE -->
       <div class="grid grid-cols-3 gap-10 mb-6 text-center">
@@ -191,18 +196,18 @@
     </div>
 
     <!-- BOTTOM -->
-    <div class="flex justify-end gap-4 mt-8 items-center">
+ <div class="flex justify-end mr-60 gap-4 mt-8 items-center">
       <input type="file" id="upload" class="hidden">
 
       <button id="attachBtn"
         onclick="upload.click()"
         disabled
-        class="px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed">
+        class="px-8 py-2  rounded-full bg-gray-200 border font-semibold cursor-not-allowed">
         แนบรูป
       </button>
 
 <a href="payment.html"
-   class="px-8 py-2 rounded-full bg-pink-300 border font-semibold inline-block">
+   class="px-8 py-2  rounded-full bg-pink-300 border font-semibold inline-block">
   ยืนยัน
 </a>
     </div>
