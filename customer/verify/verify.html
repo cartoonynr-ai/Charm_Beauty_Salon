@@ -3,49 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+  <title>Ms Charm Beauty Salon - Recovery Password</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Fahkwang', sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 1920px;
+      min-height: 957px;
+      background: #FFE6EA;
+      position: relative;
+    }
+    .logo-font { font-family: 'Cormorant Garamond', serif; }
+
+    .input-field {
+      width: 100%;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: 'Fahkwang', sans-serif;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    .input-field:focus {
+      box-shadow: 0 0 0 2px #f472b6;
+    }
+
+    .confirm-btn {
+      background: #ec4899;
+      color: white;
+      border: 1px solid #be185d;
+      border-radius: 8px;
+      padding: 9px 0;
+      width: 50%;
+      font-family: 'Fahkwang', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .confirm-btn:hover { background: #db2777; }
+
+    .salon-img {
+      flex: 1;
+      object-fit: cover;
+      height: 100%;
+      min-height: 0;
+    }
+  </style>
 </head>
-<body class="bg-pink-100 font-sans">
+<body>
 
-  <!-- Header -->
-  <div class="bg-pink-400 p-4 flex items-center">
-    <button class="text-white text-xl mr-4">&larr;</button>
-    
+  <!-- Pink Header Bar -->
+  <div style="background:#f472b6; padding:12px 20px; display:flex; align-items:center; height:48px;">
+    <button onclick="history.back()" style="background:none; border:none; color:white; font-size:26px; font-weight:bold; cursor:pointer; line-height:1;">&#8249;</button>
   </div>
 
-  <!-- Main Content -->
-  <div class="flex flex-col md:flex-row p-6 gap-6 items-start">
+  <!-- Main Layout -->
+  <div style="display:flex; height:909px; width:1920px;">
 
+    <!-- Left Panel: Form -->
+    <div style="width:420px; min-width:420px; background:white; display:flex; flex-direction:column; align-items:flex-start; padding:36px 40px; box-shadow:2px 0 8px rgba(0,0,0,0.06);">
 
- <!-- Left Section: Logo + Inputs -->
-<div class="md:w-5/6 flex flex-col items-center gap-6 bg-white p-6 rounded-xl shadow">
-  <img src="/ภาพ/Neil Tran (3).png" alt="Logo" class="w-100 h-50 object-contain -mt-40" />
-  <div class="text-center text-pink-600 font-bold text-4xl leading-tight">
-    <!-- Optional title -->
-  </div>
+      <!-- Logo -->
+      <div class="logo-font" style="margin-bottom:32px; line-height:1;">
+        <div style="font-size:3.5rem; font-weight:600; letter-spacing:0.01em; line-height:1;">
+        </div>
+        <div style="font-size:3rem; font-style:italic; font-weight:400; margin-top:-10px;">Charm</div>
+        <div style="font-size:0.55rem; letter-spacing:0.28em; font-family:'Fahkwang',sans-serif; font-weight:300; color:#666; margin-top:4px;">BEAUTY SALON</div>
+      </div>
 
-  <!-- Username Input -->
-  <div class="w-72 ">
-    <label class="block text-black font-bold mb-2 text-left text-3xl -mt-32 whitespace-nowrap -ml-20">
-  Recovery Password
-</label>
-    <label class="block text-back-600 font-semibold mb-2 text-left text-lg   -ml-20 ">Enter account recovery </label>
-    <input type="text"  class=" pl-5 -ml-20 bg-gray-200 rounded-2xl border  shadow-md px-40 py-3 border border-black-300 rounded-1xl text-xl focus:outline-none focus:ring-2 focus:ring-bladk-400" />
-  </div>
-    <div class="flex justify-center gap-4 w-72   mb-60 mt-8">
-       <button class=" bg-pink-500 hover:bg-pink-600 border border-black text-white font-semibold py-2 px-6 rounded-lg w-1/2 shadow">Confirm</button>
-  </div>
+      <!-- Title -->
+      <h2 style="font-size:1.6rem; font-weight:700; color:#1a1a1a; margin:0 0 20px 0;">รหัสผ่านกู้คืน</h2>
 
-</div>
+      <!-- Label + Input -->
+      <div style="width:100%; margin-bottom:28px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#444; margin-bottom:8px;">ใส่รหัสผ่านการกู้คืนบัญชี</label>
+        <input type="text" class="input-field" />
+      </div>
 
-    <!-- Right Section: Images -->
-    <div class="md:w-1/3 flex  flex-col gap-6 items-end">
-      <img src="/ภาพ/19.png" alt="Nail Polish" class="rounded shadow w-80 " />
+      <!-- Confirm Button -->
+      <button class="confirm-btn" onclick="window.location.href='new-password.html'">ยืนยัน</button>
+
     </div>
-    
-    <img src="/ภาพ/20.png" alt="Hair Styling" class="rounded shadow w-80 md:w-2/2" />
-    <img src="/ภาพ/21.png" alt="Salon Interior" class="rounded shadow w-80" />
+
+    <!-- Right Panel: 3 Images -->
+    <div style="flex:1; display:flex; overflow:hidden;">
+      <img src="/Photo/19.png" alt="Nail Polish" class="salon-img"
+        onerror="this.style.background='#f9a8d4'; this.removeAttribute('src');" />
+      <img src="/Photo/20.png" alt="Hair Styling" class="salon-img"
+        onerror="this.style.background='#fbcfe8'; this.removeAttribute('src');" />
+      <img src="/Photo/21.png" alt="Salon Interior" class="salon-img"
+        onerror="this.style.background='#fce7f3'; this.removeAttribute('src');" />
+    </div>
+
   </div>
 
 </body>
