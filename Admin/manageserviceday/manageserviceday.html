@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>การจัดการข้อมูล</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-100 min-h-screen">
+
+  <!-- Header -->
+   <div class="bg-pink-400 px-5 py-4 flex items-center flex-shrink-0">
+        <a href="/customer/Profile/profile.html" class="text-white">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M15 19l-7-7 7-7"/>
+      </svg>
+    </a>
+  </header>
+  </div>
+
+  <div class="flex min-h-screen">
+
+    <!-- แถบซ้าย -->
+    <div class="w-44 bg-pink-100 flex flex-col items-center pt-4 flex-shrink-0 border-r border-pink-200">
+      <img src="/Photo/logo.jpg" alt="NS Charm Logo" class="w-36 object-contain" />
+    </div>
+
+    <!-- เนื้อหาหลัก -->
+    <div class="flex-1 bg-white px-16 py-10">
+
+      <h1 class="text-3xl font-bold text-center mb-8">การจัดการข้อมูล</h1>
+
+      <!-- กล่องสีเทา -->
+      <div class="bg-gray-300 rounded-3xl p-10 max-w-4xl mx-auto shadow-lg">
+
+        <div class="grid grid-cols-3 gap-8 mb-6 text-center">
+
+          <!-- วันที่ -->
+          <div>
+            <label class="font-bold block mb-3">วันที่</label>
+            <div class="relative">
+              <button id="dateDisplay" onclick="toggleCalendar()"
+                class="w-full bg-pink-100 rounded-full px-5 py-2 border border-pink-300 flex items-center justify-between hover:bg-pink-200 transition">
+                <span id="dateLabel" class="text-gray-400 text-sm font-semibold">วัน/เดือน/ปี</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+              </button>
+              <div id="calendarPopup" class="hidden absolute top-11 left-0 z-50 bg-white border border-pink-200 rounded-2xl shadow-xl p-4 w-64">
+                <div class="flex items-center justify-between mb-3">
+                  <button onclick="prevMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">&#8249;</button>
+                  <span id="monthLabel" class="font-bold text-gray-800 text-xs"></span>
+                  <button onclick="nextMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">&#8250;</button>
+                </div>
+                <div class="grid grid-cols-7 gap-1 mb-1">
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">อา</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">จ</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">อ</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">พ</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">พฤ</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">ศ</div>
+                  <div class="text-center text-xs font-bold text-pink-900 py-1">ส</div>
+                </div>
+                <div id="daysGrid" class="grid grid-cols-7 gap-1"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- เวลา -->
+          <div>
+            <label class="font-bold block mb-3">เวลา</label>
+            <div class="relative">
+              <button id="timeDisplay" onclick="toggleTimeDropdown()"
+                class="w-full bg-pink-100 rounded-full px-5 py-2 border border-pink-300 flex items-center justify-between hover:bg-pink-200 transition">
+                <span id="timeLabel" class="text-gray-400 text-sm font-semibold">เลือกเวลา</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div id="timeDropdown" class="hidden absolute top-11 left-0 z-50 bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden w-full">
+                <div id="timeList" class="overflow-y-auto max-h-52"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- บริการ -->
+          <div>
+            <label class="font-bold block mb-3">บริการ</label>
+            <div class="flex items-center gap-2">
+              <select id="service" onchange="onServiceChange()"
+                class="flex-1 bg-pink-100 rounded-full px-4 py-2 border border-pink-300 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300">
+                <option value="">เลือกบริการ</option>
+                <option value="nail">ทำเล็บ</option>
+                <option value="hair">ทำผม</option>
+                <option value="makeup">Makeup</option>
+              </select>
+              <button onclick="addService()"
+                class="w-9 h-9 rounded-full bg-white border-2 border-gray-500 flex items-center justify-center text-gray-600 hover:bg-pink-200 font-bold text-xl flex-shrink-0 transition">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ตัวเลือกเพิ่มเติม -->
+        <h2 class="font-bold text-lg mb-3">ตัวเลือกเพิ่มเติม</h2>
+        <div class="bg-pink-100 rounded-3xl p-6 min-h-48">
+          <div class="flex items-center gap-2 mb-4">
+            <input id="newOptionInput" type="text" placeholder="ชื่อตัวเลือกใหม่..."
+              class="flex-1 bg-white rounded-full px-5 py-2 border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300" />
+            <input id="newOptionPrice" type="number" placeholder="ราคา (บาท)" min="0"
+              class="w-32 bg-white rounded-full px-4 py-2 border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300" />
+            <button onclick="addOption()"
+              class="w-9 h-9 rounded-full bg-pink-400 flex items-center justify-center text-white hover:bg-pink-500 font-bold text-xl flex-shrink-0 transition shadow">+</button>
+          </div>
+
+          <div class="flex">
+            <div id="optionsLeft" class="w-1/2 space-y-2 pr-6"></div>
+            <div class="w-px bg-gray-400"></div>
+            <div id="optionsRight" class="w-1/2 space-y-2 pl-6"></div>
+          </div>
+
+          <p id="emptyMsg" class="text-gray-400 text-sm text-center mt-4">เลือกบริการก่อน หรือเพิ่มตัวเลือกด้านบน</p>
+        </div>
+      </div>
+
+      <!-- ปุ่มล่าง -->
+      <div class="flex justify-end max-w-4xl mx-auto gap-4 mt-8 items-center flex-wrap">
+        <input type="file" id="upload" class="hidden" accept="image/*" onchange="onFileUpload(this)">
+   
+        <span id="attachedLabel" style="display:none"
+          class="flex items-center gap-1 px-3 py-1 rounded-full bg-pink-100 border border-pink-300 text-xs text-pink-600 font-semibold">
+          <span id="fileName"></span>
+          <span onclick="removeFile()" class="cursor-pointer text-red-400 hover:text-red-600 ml-1 font-bold">✕</span>
+        </span>
+        <button onclick="handleConfirm()"
+          class="px-8 py-2 rounded-full bg-pink-300 hover:bg-pink-400 border font-semibold text-sm transition">✓ ยืนยัน</button>
+      </div>
+
+      <hr class="max-w-4xl mx-auto mt-10 border-gray-300" />
+
+      <!-- ตารางสรุป -->
+      <div id="summarySection" style="display:none" class="max-w-4xl mx-auto mt-8">
+        <h2 class="font-bold text-lg mb-3 text-gray-700">📋 รายการที่บันทึก</h2>
+        <div class="rounded-2xl overflow-hidden shadow border border-pink-200">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-pink-400 text-white">
+                <th class="py-3 px-4 text-left font-semibold">วันที่</th>
+                <th class="py-3 px-4 text-left font-semibold">เวลา</th>
+                <th class="py-3 px-4 text-left font-semibold">บริการ</th>
+                <th class="py-3 px-4 text-left font-semibold">ตัวเลือก</th>
+                <th class="py-3 px-4 text-right font-semibold">ราคา</th>
+                <th class="py-3 px-4 text-center font-semibold">รูป</th>
+                <th class="py-3 px-4 text-center font-semibold">ลบ</th>
+              </tr>
+            </thead>
+            <tbody id="summaryBody" class="divide-y divide-pink-100 bg-white"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ===== ปฏิทิน =====
+    const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+                      'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+    const today = new Date(); today.setHours(0,0,0,0);
+    let calYear = today.getFullYear(), calMonth = today.getMonth(), selectedDate = null;
+
+    function toggleCalendar() { document.getElementById('calendarPopup').classList.toggle('hidden'); }
+    function closeCalendar()  { document.getElementById('calendarPopup').classList.add('hidden'); }
+
+    document.addEventListener('click', e => {
+      if (!document.getElementById('calendarPopup').contains(e.target) &&
+          !document.getElementById('dateDisplay').contains(e.target)) closeCalendar();
+      if (!document.getElementById('timeDropdown').contains(e.target) &&
+          !document.getElementById('timeDisplay').contains(e.target)) closeTimeDropdown();
+    });
+
+    function prevMonth() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
+    function nextMonth() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); }
+
+    function renderCalendar() {
+      document.getElementById('monthLabel').textContent = thMonths[calMonth]+' '+(calYear+543);
+      const grid = document.getElementById('daysGrid');
+      grid.innerHTML = '';
+      const first = new Date(calYear,calMonth,1).getDay();
+      const days  = new Date(calYear,calMonth+1,0).getDate();
+
+      for(let i=0;i<first;i++){
+        grid.appendChild(document.createElement('div'));
+      }
+      for(let d=1;d<=days;d++){
+        const date    = new Date(calYear,calMonth,d);
+        const isPast  = date < today;
+        const isSel   = selectedDate && selectedDate.getTime()===date.getTime();
+        const isToday = date.getTime()===today.getTime();
+        const el = document.createElement('div');
+
+        let cls = 'aspect-square flex items-center justify-center rounded-full text-xs font-semibold cursor-pointer transition-all';
+        if(isPast)       cls += ' text-gray-300 cursor-not-allowed';
+        else if(isSel)   cls += ' bg-pink-500 text-white';
+        else if(isToday) cls += ' border-2 border-pink-500 text-pink-500 hover:bg-pink-100';
+        else             cls += ' hover:bg-pink-200 text-gray-700';
+
+        el.className = cls;
+        el.textContent = d;
+        if(!isPast) el.onclick = () => {
+          selectedDate = new Date(calYear,calMonth,d);
+          const lbl = document.getElementById('dateLabel');
+          lbl.textContent = d+' '+thMonths[calMonth]+' '+(calYear+543);
+          lbl.className = 'text-gray-800 text-sm font-semibold';
+          renderCalendar();
+          closeCalendar();
+        };
+        grid.appendChild(el);
+      }
+    }
+    renderCalendar();
+
+    // ===== Time Dropdown =====
+    const timeSlots = [];
+    for(let h=10; h<=20; h++){
+      timeSlots.push(h+'.00');
+      if(h < 20) timeSlots.push(h+'.30');
+    }
+    let selectedTime = '';
+
+    function buildTimeList() {
+      const list = document.getElementById('timeList');
+      list.innerHTML = '';
+      timeSlots.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'px-5 py-2 text-sm cursor-pointer transition ' +
+          (selectedTime===t
+            ? 'bg-pink-200 font-semibold text-pink-700'
+            : 'text-gray-700 hover:bg-pink-100');
+        item.textContent = t;
+        item.onclick = () => {
+          selectedTime = t;
+          document.getElementById('timeLabel').textContent = t;
+          document.getElementById('timeLabel').className = 'text-gray-800 text-sm font-semibold';
+          closeTimeDropdown();
+          buildTimeList();
+        };
+        list.appendChild(item);
+      });
+    }
+
+    function toggleTimeDropdown() {
+      const dd = document.getElementById('timeDropdown');
+      dd.classList.toggle('hidden');
+      if(!dd.classList.contains('hidden')) buildTimeList();
+    }
+    function closeTimeDropdown() {
+      document.getElementById('timeDropdown').classList.add('hidden');
+    }
+
+    // ===== ข้อมูลบริการ =====
+    const runtimeOptions = {
+      nail:[
+        {label:'ต่อเล็บอะคริลิค',price:1500},{label:'เติมโคนอะคริลิค',price:800},
+        {label:'ถอดเล็บอะคริลิค',price:500},{label:'ทาสีเจลมือ / เท้า',price:900},
+        {label:'ถอดเล็บ',price:100},{label:'ทาสี',price:200},
+        {label:'ทาสีแฟนซี',price:200},{label:'ไล่สี',price:200},{label:'เพ้นท์',price:50},
+      ],
+      hair:[
+        {label:'ตัดผมชาย',price:100},{label:'ตัดผมสตรี',price:150},
+        {label:'สระ-ไดร์',price:100},{label:'ทำสีผม',price:350},
+        {label:'ไฮไลท์ / โอทโทน',price:350},{label:'ดัดลอน',price:300},
+        {label:'ยืดผม',price:400},{label:'ทรีตเมนต์',price:100},
+      ],
+      makeup:[
+        {label:'แต่งหน้าธรรมดา',price:250},{label:'แต่งหน้าไปงาน',price:350},
+        {label:'รับปริญญา / เจ้าสาว',price:1500},{label:'ถ่ายภาพ / พรีเวดดิ้ง',price:150},
+        {label:'ปรับบุคลิก',price:600},
+      ],
+    };
+    const serviceLabels = {nail:'ทำเล็บ', hair:'ทำผม', makeup:'Makeup'};
+
+    function onServiceChange() { renderOptions(); }
+
+    function renderOptions() {
+      const svc = document.getElementById('service').value;
+      const left = document.getElementById('optionsLeft');
+      const right = document.getElementById('optionsRight');
+      const emptyMsg = document.getElementById('emptyMsg');
+      left.innerHTML=''; right.innerHTML='';
+
+      if(!svc || !runtimeOptions[svc] || runtimeOptions[svc].length===0){
+        emptyMsg.style.display='block'; return;
+      }
+      emptyMsg.style.display='none';
+
+      const opts = runtimeOptions[svc];
+      const half = Math.ceil(opts.length/2);
+      opts.forEach((opt,idx)=>{
+        const container = idx<half ? left : right;
+        const row = document.createElement('label');
+        row.className = 'flex justify-between items-center gap-2 text-sm py-1 px-2 rounded-lg hover:bg-pink-200 cursor-pointer transition';
+        row.innerHTML = `
+          <span class="flex items-center gap-2 flex-1 min-w-0">
+            <input type="radio" name="opt" value="${idx}" onchange="onOptChange()" class="accent-pink-500">
+            <span class="truncate">${opt.label}</span>
+          </span>
+          <span class="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
+            <span class="text-pink-600 font-semibold text-xs">${opt.price ? opt.price.toLocaleString()+' ฿' : ''}</span>
+            <button type="button" onclick="deleteOption('${svc}',${idx})"
+              class="w-5 h-5 rounded-full bg-red-100 hover:bg-red-200 text-red-400 hover:text-red-600 text-xs font-bold flex items-center justify-center transition">✕</button>
+          </span>`;
+        container.appendChild(row);
+      });
+    }
+
+    function addOption() {
+      const svc = document.getElementById('service').value;
+      const label = document.getElementById('newOptionInput').value.trim();
+      const price = parseInt(document.getElementById('newOptionPrice').value)||0;
+      if(!svc){ showToast('กรุณาเลือกบริการก่อน','⚠️'); return; }
+      if(!label){ showToast('กรุณากรอกชื่อตัวเลือก','⚠️'); return; }
+      runtimeOptions[svc].push({label,price});
+      document.getElementById('newOptionInput').value='';
+      document.getElementById('newOptionPrice').value='';
+      renderOptions();
+      showToast('เพิ่ม "'+label+'" เรียบร้อย','✅');
+    }
+
+    function deleteOption(svc,idx) {
+      const name = runtimeOptions[svc][idx].label;
+      if(confirm('ลบ "'+name+'" ออกหรือไม่?')){
+        runtimeOptions[svc].splice(idx,1);
+        renderOptions();
+        showToast('ลบ "'+name+'" เรียบร้อย','🗑️');
+      }
+    }
+
+    function addService() {
+      const key = prompt('รหัสบริการ (ภาษาอังกฤษ ไม่มีช่องว่าง เช่น facial):');
+      if(!key) return;
+      const k = key.trim().toLowerCase().replace(/\s+/g,'_');
+      if(runtimeOptions[k]){ showToast('มีบริการนี้อยู่แล้ว','⚠️'); return; }
+      const label = prompt('ชื่อแสดงผล (ภาษาไทย):');
+      if(!label) return;
+      runtimeOptions[k]=[];
+      serviceLabels[k]=label;
+      const sel = document.getElementById('service');
+      const opt = document.createElement('option');
+      opt.value=k; opt.textContent=label;
+      sel.appendChild(opt); sel.value=k;
+      renderOptions();
+      showToast('เพิ่มบริการ "'+label+'" เรียบร้อย','✅');
+    }
+
+    function onOptChange() {
+      const btn = document.getElementById('attachBtn');
+      btn.disabled = false;
+      btn.className = 'px-8 py-2 rounded-full bg-pink-200 hover:bg-pink-300 border font-semibold text-sm cursor-pointer transition';
+    }
+
+    // ===== แนบรูป =====
+    let uploadedFile = null;
+    function onFileUpload(input) {
+      if(input.files && input.files[0]){
+        uploadedFile = input.files[0];
+        const name = uploadedFile.name;
+        document.getElementById('fileName').textContent = '📷 '+(name.length>20 ? name.slice(0,18)+'...' : name);
+        document.getElementById('attachedLabel').style.display='flex';
+      }
+    }
+    function removeFile() {
+      uploadedFile = null;
+      document.getElementById('upload').value='';
+      document.getElementById('attachedLabel').style.display='none';
+    }
+
+    // ===== บันทึก =====
+    let records = [];
+
+    function handleConfirm() {
+      const dateText = document.getElementById('dateLabel').textContent;
+      const time = selectedTime;
+      const svcEl = document.getElementById('service');
+      const svcVal = svcEl.value;
+      const svcText = svcVal ? (serviceLabels[svcVal] || svcEl.options[svcEl.selectedIndex].text) : '';
+      const chosen = document.querySelector('input[name="opt"]:checked');
+
+      if(dateText==='วัน/เดือน/ปี'){ showToast('กรุณาเลือกวันที่','⚠️'); return; }
+      if(!time){ showToast('กรุณาเลือกเวลา','⚠️'); return; }
+      if(!svcVal){ showToast('กรุณาเลือกบริการ','⚠️'); return; }
+      if(!chosen){ showToast('กรุณาเลือกตัวเลือก','⚠️'); return; }
+
+      const opt = runtimeOptions[svcVal][parseInt(chosen.value)];
+      const imgUrl = uploadedFile ? URL.createObjectURL(uploadedFile) : null;
+      records.push({ id:Date.now(), date:dateText, time, service:svcText, option:opt.label, price:opt.price, imgUrl });
+      renderSummary();
+
+      // reset
+      selectedDate = null;
+      const lbl = document.getElementById('dateLabel');
+      lbl.textContent='วัน/เดือน/ปี'; lbl.className='text-gray-400 text-sm font-semibold';
+      selectedTime='';
+      document.getElementById('timeLabel').textContent='เลือกเวลา';
+      document.getElementById('timeLabel').className='text-gray-400 text-sm font-semibold';
+      document.getElementById('service').value='';
+      document.getElementById('optionsLeft').innerHTML='';
+      document.getElementById('optionsRight').innerHTML='';
+      document.getElementById('emptyMsg').style.display='block';
+      removeFile();
+      const btn = document.getElementById('attachBtn');
+      btn.disabled=true;
+      btn.className='px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed text-sm text-gray-400';
+      renderCalendar();
+      showToast('บันทึกสำเร็จ! 🎉','✅');
+    }
+
+    function renderSummary() {
+      document.getElementById('summarySection').style.display='block';
+      const tbody = document.getElementById('summaryBody');
+      tbody.innerHTML='';
+      records.forEach((r,i)=>{
+        const tr = document.createElement('tr');
+        tr.className = i%2===0 ? 'bg-white' : 'bg-pink-50';
+        tr.innerHTML=`
+          <td class="py-3 px-4 text-gray-700">${r.date}</td>
+          <td class="py-3 px-4 text-gray-700">${r.time}</td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 bg-pink-100 text-pink-700 rounded-full text-xs font-semibold">${r.service}</span>
+          </td>
+          <td class="py-3 px-4 text-gray-700">${r.option}</td>
+          <td class="py-3 px-4 text-right font-bold text-pink-600">${r.price ? r.price.toLocaleString()+' ฿' : '-'}</td>
+          <td class="py-3 px-4 text-center">
+            ${r.imgUrl
+              ? `<img src="${r.imgUrl}" class="w-10 h-10 object-cover rounded-lg mx-auto border border-pink-200 cursor-pointer hover:opacity-80" onclick="viewImg('${r.imgUrl}')">`
+              : '<span class="text-gray-300 text-xs">-</span>'}
+          </td>
+          <td class="py-3 px-4 text-center">
+            <button onclick="deleteRecord(${r.id})"
+              class="w-7 h-7 rounded-full bg-red-100 hover:bg-red-200 text-red-500 text-xs font-bold transition">✕</button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+
+      const total = records.reduce((s,r)=>s+(r.price||0), 0);
+      const tf = document.createElement('tr');
+      tf.className='bg-pink-400 text-white font-bold';
+      tf.innerHTML=`
+        <td colspan="4" class="py-3 px-4 text-right">รวม ${records.length} รายการ</td>
+        <td class="py-3 px-4 text-right">${total.toLocaleString()} ฿</td>
+        <td colspan="2"></td>`;
+      tbody.appendChild(tf);
+    }
+
+    function deleteRecord(id) {
+      if(confirm('ลบรายการนี้ออกหรือไม่?')){
+        records = records.filter(r=>r.id!==id);
+        if(records.length===0) document.getElementById('summarySection').style.display='none';
+        else renderSummary();
+        showToast('ลบรายการเรียบร้อย','🗑️');
+      }
+    }
+
+    function viewImg(url) {
+      const m = document.createElement('div');
+      m.className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
+      m.innerHTML=`<div class="relative">
+        <img src="${url}" class="rounded-2xl shadow-2xl" style="max-width:90vw;max-height:80vh;">
+        <button onclick="this.closest('.fixed').remove()"
+          class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full font-bold text-gray-700 shadow hover:bg-pink-100 flex items-center justify-center">✕</button>
+      </div>`;
+      m.onclick=e=>{ if(e.target===m) m.remove(); };
+      document.body.appendChild(m);
+    }
+
+    function showToast(msg, icon='ℹ️') {
+      const t = document.createElement('div');
+      t.className='fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white border border-pink-200 shadow-xl rounded-2xl px-5 py-3 text-sm font-semibold text-gray-700 opacity-0 translate-y-3 transition-all duration-300';
+      t.innerHTML=`<span class="text-lg">${icon}</span>${msg}`;
+      document.body.appendChild(t);
+      requestAnimationFrame(()=>{ t.classList.remove('opacity-0','translate-y-3'); });
+      setTimeout(()=>{
+        t.classList.add('opacity-0','translate-y-3');
+        setTimeout(()=>t.remove(), 300);
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
