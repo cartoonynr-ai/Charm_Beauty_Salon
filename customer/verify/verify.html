@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ms Charm Beauty Salon - Recovery Password</title>
+  <title>Ms Charm Beauty Salon - Verify OTP</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -12,27 +12,67 @@
       font-family: 'Fahkwang', sans-serif;
       margin: 0; padding: 0;
       width: 1920px; min-height: 957px;
-      background: #FFE6EA; position: relative;
+      background: #FFE6EA;
     }
-    .logo-font { font-family: 'Cormorant Garamond', serif; }
+
+
     .input-field {
       width: 100%; background: #f0f0f0;
       border: 1px solid #ddd; border-radius: 8px;
       padding: 10px 14px; font-size: 14px;
       font-family: 'Fahkwang', sans-serif;
-      outline: none; transition: box-shadow 0.2s;
+      outline: none; transition: box-shadow 0.2s, border-color 0.2s;
     }
-    .input-field:focus { box-shadow: 0 0 0 2px #f472b6; }
+    .input-field:focus { box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6; }
+    .input-field.error { box-shadow: 0 0 0 2px #f87171; border-color: #f87171; }
+
     .confirm-btn {
       background: #ec4899; color: white;
       border: 1px solid #be185d; border-radius: 8px;
       padding: 9px 0; width: 50%;
       font-family: 'Fahkwang', sans-serif;
       font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: background 0.2s;
+      cursor: pointer; transition: all 0.2s;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-    .confirm-btn:hover { background: #db2777; }
+    .confirm-btn:hover { background: #db2777; transform: translateY(-1px); }
+    .confirm-btn:disabled { background: #f9a8d4; cursor: not-allowed; transform: none; }
+
+    .otp-btn {
+      background: white; color: #ec4899;
+      border: 1px solid #f472b6; border-radius: 8px;
+      padding: 6px 16px; font-family: 'Fahkwang', sans-serif;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .otp-btn:hover:not(:disabled) { background: #fce7f3; }
+    .otp-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 6-box OTP input */
+    .otp-inputs { display: flex; gap: 10px; margin-bottom: 6px; }
+    .otp-box {
+      width: 48px; height: 52px; text-align: center;
+      font-size: 1.4rem; font-weight: 700;
+      border: 1px solid #ddd; border-radius: 8px;
+      background: #f0f0f0; outline: none;
+      font-family: 'Fahkwang', sans-serif;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .otp-box:focus { box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6; }
+    .otp-box.error { box-shadow: 0 0 0 2px #f87171; border-color: #f87171; }
+    .otp-box.correct { box-shadow: 0 0 0 2px #10b981; border-color: #10b981; background: #f0fdf4; }
+
+    .error-msg { color: #ef4444; font-size: 11px; margin-top: 4px; display: none; }
+    .error-msg.show { display: block; }
+
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+    .shake { animation: shake 0.4s ease; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width:15px; height:15px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
+
+    .toast { position:fixed; bottom:28px; right:28px; color:white; padding:12px 22px; border-radius:10px; font-size:13px; font-weight:600; opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; z-index:100; }
+    .toast.show { opacity:1; transform:translateY(0); }
   </style>
 </head>
 <body>
@@ -43,42 +83,52 @@
   </div>
 
   <!-- Main Layout -->
-  <div style="display:flex; height:909px; width:1920px;">
+  <div style="display:flex; min-height:861px; width:1920px;">
 
     <!-- Left Panel -->
     <div style="width:700px; min-width:700px; background:white; display:flex; flex-direction:column; align-items:flex-start; padding:36px 40px; box-shadow:2px 0 8px rgba(0,0,0,0.06);">
 
-      
       <img src="/Photo/logo.jpg" alt="Ms Charm Beauty Salon" style="width:160px; object-fit:contain; margin-bottom:32px;" />
 
-      <!-- Title -->
-      <h2 style="font-size:1.6rem; font-weight:700; color:#1a1a1a; margin:0 0 20px 0;">รหัสผ่านกู้คืน</h2>
+      <h2 style="font-size:1.6rem; font-weight:700; color:#1a1a1a; margin:0 0 8px 0;">รหัสผ่านกู้คืน</h2>
+      <p style="font-size:13px; color:#9ca3af; margin:0 0 24px 0;">กรอกรหัส OTP 6 หลักที่แสดงด้านบน</p>
 
-      <!-- Input -->
-      <div style="width:100%; margin-bottom:28px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:#444; margin-bottom:8px;">ใส่รหัสผ่านการกู้คืนบัญชี</label>
-        <input type="text" class="input-field" />
+      <!-- OTP Boxes -->
+      <div style="width:100%; margin-bottom:8px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#444; margin-bottom:10px;">ใส่รหัส OTP</label>
+        <div class="otp-inputs" id="otpInputs">
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric" />
+        </div>
+        <p class="error-msg" id="otpError">รหัส OTP ไม่ถูกต้อง กรุณาลองใหม่</p>
       </div>
 
-      <!-- Button -->
-      <button class="confirm-btn" onclick="window.location.href='new-password.html'">ยืนยัน</button>
+      <!-- Request OTP -->
+      <button class="otp-btn" id="otp-button-main" onclick="sendOtp()" style="margin-bottom:28px;">
+        รับ OTP
+      </button>
+
+      <!-- Confirm -->
+      <button class="confirm-btn" onclick="verifyOtp()">ยืนยัน</button>
 
     </div>
 
-    <!-- Right Panel: 3 equal images horizontal -->
+    <!-- Right Panel -->
     <div style="flex:1; display:flex; flex-direction:row; gap:16px; padding:24px; overflow:hidden; align-items:center;">
-      <img src="/Photo/19.png" alt="Nail Polish"
-        style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);"
-        onerror="this.style.background='#f9a8d4'; this.removeAttribute('src');" />
-      <img src="/Photo/20.png" alt="Hair Styling"
-        style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);"
-        onerror="this.style.background='#fbcfe8'; this.removeAttribute('src');" />
-      <img src="/Photo/21.png" alt="Salon Interior"
-        style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);"
-        onerror="this.style.background='#fce7f3'; this.removeAttribute('src');" />
+      <img src="/Photo/19.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#f9a8d4'; this.removeAttribute('src');" />
+      <img src="/Photo/20.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#fbcfe8'; this.removeAttribute('src');" />
+      <img src="/Photo/21.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#fce7f3'; this.removeAttribute('src');" />
     </div>
 
   </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="verify.js"></script>
 
 </body>
 </html>

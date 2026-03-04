@@ -1,6 +1,5 @@
-// Toggle password visibility
+// ===== Toggle Password =====
 let pwVisible = false;
-
 function togglePw() {
   pwVisible = !pwVisible;
   document.getElementById('password').type = pwVisible ? 'text' : 'password';
@@ -9,13 +8,13 @@ function togglePw() {
     : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
 }
 
-// Clear error state from input
+// ===== Clear error =====
 function clearErr(inputId, errId) {
   document.getElementById(inputId).classList.remove('error');
   document.getElementById(errId).classList.remove('show');
 }
 
-// Show error + shake animation
+// ===== Show error + shake =====
 function showErr(inputId, errId, msg) {
   const input = document.getElementById(inputId);
   const err   = document.getElementById(errId);
@@ -25,15 +24,20 @@ function showErr(inputId, errId, msg) {
   setTimeout(() => input.classList.remove('shake'), 400);
 }
 
-// Login handler
+// ===== Login =====
 function doLogin() {
-  const u = document.getElementById('username').value.trim();
-  const p = document.getElementById('password').value;
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
   let ok = true;
 
-  if (!u) { showErr('username', 'username-error', 'กรุณากรอก username'); ok = false; }
-  if (!p) { showErr('password', 'password-error', 'กรุณากรอกรหัสผ่าน'); ok = false; }
+  if (!username) { showErr('username', 'username-error', 'กรุณากรอก username'); ok = false; }
+  if (!password) { showErr('password', 'password-error', 'กรุณากรอกรหัสผ่าน'); ok = false; }
+  else if (password.length < 4) { showErr('password', 'password-error', 'รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร'); ok = false; }
   if (!ok) return;
+
+  // บันทึก username ลง localStorage
+  localStorage.setItem('charm_username', username);
+  localStorage.setItem('charm_logged_in', 'true');
 
   const btn = document.getElementById('loginBtn');
   btn.innerHTML = '<span class="spinner"></span>';
@@ -49,7 +53,7 @@ function doLogin() {
   }, 1200);
 }
 
-// Toast notification
+// ===== Toast =====
 function showToast(msg, color) {
   const t = document.getElementById('toast');
   t.textContent = msg;

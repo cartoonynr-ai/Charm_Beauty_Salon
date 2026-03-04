@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Charm Beauty & Salon</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ===== TAB VISIBILITY ===== */
+    #tab-price,
+    #tab-promo {
+      display: block;
+    }
+
+    #tab-price.hidden,
+    #tab-promo.hidden {
+      display: none;
+    }
+
+    /* ===== TAB LINK ACTIVE STATE ===== */
+    #btn-price.active,
+    #btn-promo.active {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body class="bg-[#FFE6EA] text-gray-800">
@@ -40,14 +59,13 @@
   <!-- Google Map Embed -->
   <div class="w-[420px] h-[240px] rounded-xl overflow-hidden shadow">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d235.73922957049268!2d99.92304002022807!3d19.02731378955737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1sth!2sth!4v1772447138390!5m2!1sth!2sth"
+      src="https://maps.google.com/maps?q=Charm+Beauty+Salon+Phayao&output=embed&z=16"
       width="100%"
       height="100%"
       style="border:0;"
       allowfullscreen=""
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
-      id="map-frame"
     ></iframe>
   </div>
 
@@ -58,70 +76,124 @@
 
   <h2 class="text-2xl font-bold mb-2">ราคา</h2>
   <p class="text-pink-500 mb-10">
-    <a href="/customer/main loged/main loged.html" class="font-semibold">ราคา</a>
+    <a href="#" id="btn-price" class="font-semibold">ราคา</a>
     |
-    <a href="/customer/main loged promotion/main loged promotion.html" class="hover:underline text-pink-600">โปรโมชั่น</a>
+    <a href="#" id="btn-promo" class="hover:underline text-pink-600">โปรโมชั่น</a>
   </p>
 
-  <div class="w-full h-10 bg-pink-300 my-16"></div>
+  <!-- ===== TAB: PRICE ===== -->
+  <div id="tab-price">
 
-  <!-- Nail -->
-  <div class="flex justify-center gap-10 mb-20 items-center">
-    <div class="w-[520px] text-left">
-      <h3 class="text-pink-500 font-bold mb-4">ทำเล็บ</h3>
-      <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
-        <li class="flex justify-between"><span>ต่อเล็บอะคริลิก</span><span>฿1,500</span></li>
-        <li class="flex justify-between"><span>เติมโคนอะคริลิก</span><span>฿800</span></li>
-        <li class="flex justify-between"><span>ถอดเล็บอะคริลิก</span><span>฿500</span></li>
-        <li class="flex justify-between"><span>ทาสีเจล</span><span>฿500</span></li>
-        <li class="flex justify-between"><span>ทาสีเจล มือ+เท้า</span><span>฿900</span></li>
-        <li class="flex justify-between"><span>ถอดสีเจล</span><span>฿100</span></li>
-        <li class="flex justify-between"><span>ทาสีธรรมดา</span><span>฿200</span></li>
-        <li class="flex justify-between"><span>เฟรนช์</span><span>฿200</span></li>
-        <li class="flex justify-between"><span>ไล่สี</span><span>฿200</span></li>
-        <li class="flex justify-between"><span>เพนท์ลาย เริ่มต้น</span><span>฿50</span></li>
-      </ul>
+    <div class="w-full h-10 bg-pink-300 my-16"></div>
+
+    <!-- Nail -->
+    <div class="flex justify-center gap-10 mb-20 items-center">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">ทำเล็บ</h3>
+        <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
+          <li class="flex justify-between"><span>ต่อเล็บอะคริลิก</span><span>฿1,500</span></li>
+          <li class="flex justify-between"><span>เติมโคนอะคริลิก</span><span>฿800</span></li>
+          <li class="flex justify-between"><span>ถอดเล็บอะคริลิก</span><span>฿500</span></li>
+          <li class="flex justify-between"><span>ทาสีเจล</span><span>฿500</span></li>
+          <li class="flex justify-between"><span>ทาสีเจล มือ+เท้า</span><span>฿900</span></li>
+          <li class="flex justify-between"><span>ถอดสีเจล</span><span>฿100</span></li>
+          <li class="flex justify-between"><span>ทาสีธรรมดา</span><span>฿200</span></li>
+          <li class="flex justify-between"><span>เฟรนช์</span><span>฿200</span></li>
+          <li class="flex justify-between"><span>ไล่สี</span><span>฿200</span></li>
+          <li class="flex justify-between"><span>เพนท์ลาย เริ่มต้น</span><span>฿50</span></li>
+        </ul>
+      </div>
+      <img src="/Photo/nail.jpg" class="w-[360px] rounded-xl shadow" />
     </div>
-    <img src="/Photo/nail.jpg" class="w-[360px] rounded-xl shadow" />
-  </div>
 
-  <div class="w-full h-10 bg-pink-300 my-16"></div>
+    <div class="w-full h-10 bg-pink-300 my-16"></div>
 
-  <!-- Hair -->
-  <div class="flex justify-center gap-10 mb-20 items-center">
-    <div class="w-[520px] text-left">
-      <h3 class="text-pink-500 font-bold mb-4">ทำผม</h3>
-      <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
-        <li class="flex justify-between"><span>ตัดผมชาย</span><span>฿80-150</span></li>
-        <li class="flex justify-between"><span>ตัดผมสตรี</span><span>฿150-300</span></li>
-        <li class="flex justify-between"><span>สระ-ไดร์</span><span>฿80-150</span></li>
-        <li class="flex justify-between"><span>ทำสีพื้นฐาน</span><span>฿350-900</span></li>
-        <li class="flex justify-between"><span>โกรกสี</span><span>฿150-300</span></li>
-        <li class="flex justify-between"><span>ดัดลอน</span><span>฿300-700</span></li>
-        <li class="flex justify-between"><span>ยืดผม</span><span>฿400-800</span></li>
-        <li class="flex justify-between"><span>ทรีตเมนต์</span><span>฿80-150</span></li>
-      </ul>
+    <!-- Hair -->
+    <div class="flex justify-center gap-10 mb-20 items-center">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">ทำผม</h3>
+        <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
+          <li class="flex justify-between"><span>ตัดผมชาย</span><span>฿80-150</span></li>
+          <li class="flex justify-between"><span>ตัดผมสตรี</span><span>฿150-300</span></li>
+          <li class="flex justify-between"><span>สระ-ไดร์</span><span>฿80-150</span></li>
+          <li class="flex justify-between"><span>ทำสีพื้นฐาน</span><span>฿350-900</span></li>
+          <li class="flex justify-between"><span>โกรกสี</span><span>฿150-300</span></li>
+          <li class="flex justify-between"><span>ดัดลอน</span><span>฿300-700</span></li>
+          <li class="flex justify-between"><span>ยืดผม</span><span>฿400-800</span></li>
+          <li class="flex justify-between"><span>ทรีตเมนต์</span><span>฿80-150</span></li>
+        </ul>
+      </div>
+      <img src="/Photo/hair.jpg" class="w-[360px] rounded-xl shadow" />
     </div>
-    <img src="/Photo/hair.jpg" class="w-[360px] rounded-xl shadow" />
-  </div>
 
-  <div class="w-full h-10 bg-pink-300 my-16"></div>
+    <div class="w-full h-10 bg-pink-300 my-16"></div>
 
-  <!-- Makeup -->
-  <div class="flex justify-center gap-10 mb-20 items-center">
-    <div class="w-[520px] text-left">
-      <h3 class="text-pink-500 font-bold mb-4">แต่งหน้า</h3>
-      <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
-        <li class="flex justify-between"><span>แต่งหน้าธรรมชาติ / ทุกวัน</span><span>฿250-600</span></li>
-        <li class="flex justify-between"><span>แต่งหน้าออกงาน / อีเวนต์</span><span>฿200-400</span></li>
-        <li class="flex justify-between"><span>Soft Glam / วัยรุ่น</span><span>฿1,500-3,000</span></li>
-        <li class="flex justify-between"><span>แต่งหน้าเจ้าสาว</span><span>฿800-1,500</span></li>
-        <li class="flex justify-between"><span>แต่งหน้าเด็ก</span><span>฿20-80</span></li>
-        <li class="flex justify-between"><span>แต่งหน้ารับปริญญา</span><span>฿500-900</span></li>
-      </ul>
+    <!-- Makeup -->
+    <div class="flex justify-center gap-10 mb-20 items-center">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">แต่งหน้า</h3>
+        <ul class="space-y-2 border-t border-pink-300 pt-4 text-sm">
+          <li class="flex justify-between"><span>แต่งหน้าธรรมชาติ / ทุกวัน</span><span>฿250-600</span></li>
+          <li class="flex justify-between"><span>แต่งหน้าออกงาน / อีเวนต์</span><span>฿200-400</span></li>
+          <li class="flex justify-between"><span>Soft Glam / วัยรุ่น</span><span>฿1,500-3,000</span></li>
+          <li class="flex justify-between"><span>แต่งหน้าเจ้าสาว</span><span>฿800-1,500</span></li>
+          <li class="flex justify-between"><span>แต่งหน้าเด็ก</span><span>฿20-80</span></li>
+          <li class="flex justify-between"><span>แต่งหน้ารับปริญญา</span><span>฿500-900</span></li>
+        </ul>
+      </div>
+      <img src="/Photo/makeup.jpg" class="w-[360px] rounded-xl shadow" />
     </div>
-    <img src="/Photo/makeup.jpg" class="w-[360px] rounded-xl shadow" />
-  </div>
+
+  </div><!-- end #tab-price -->
+
+  <!-- ===== TAB: PROMOTION ===== -->
+  <div id="tab-promo" class="hidden">
+
+    <!-- Nail -->
+    <div class="flex justify-center gap-10 px-10 mb-16">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">ทำเล็บ</h3>
+        <ul class="space-y-3 border-t border-pink-300 pt-4">
+          <li class="flex justify-between"><span>ทำเล็บมือ เบื้องต้น</span><span>฿299</span></li>
+          <li class="flex justify-between"><span>เจลมือ + เท้า</span><span>฿599</span></li>
+          <li class="flex justify-between"><span>ล้างเจล + ทำใหม่ ราคาพิเศษ</span><span>฿399</span></li>
+          <li class="pt-2 text-sm text-gray-500">ลูกค้าใหม่รับส่วนลดพิเศษเฉพาะรายการ</li>
+        </ul>
+      </div>
+      <img src="/Photo/nail.jpg" class="w-[360px] rounded-xl shadow" />
+    </div>
+
+    <div class="w-full h-10 bg-pink-300 my-16"></div>
+
+    <!-- Hair -->
+    <div class="flex justify-center gap-10 px-10 mb-16">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">ทำผม</h3>
+        <ul class="space-y-3 border-t border-pink-300 pt-4">
+          <li class="flex justify-between"><span>ตัดผม (จ.-พฤ.) ลด 10%</span><span>฿499</span></li>
+          <li class="flex justify-between"><span>สระ + ตัด + ไดร์</span><span>฿199</span></li>
+          <li class="pt-2 text-sm text-gray-500">สำหรับลูกค้าที่ทำเคมีครบแพ็กเกจ</li>
+        </ul>
+      </div>
+      <img src="/Photo/hair2.jpg" class="w-[360px] rounded-xl shadow" />
+    </div>
+
+    <div class="w-full h-10 bg-pink-300 my-16"></div>
+
+    <!-- Makeup -->
+    <div class="flex justify-center gap-10 px-10">
+      <div class="w-[520px] text-left">
+        <h3 class="text-pink-500 font-bold mb-4">แต่งหน้า</h3>
+        <ul class="space-y-3 border-t border-pink-300 pt-4">
+          <li class="flex justify-between"><span>โปรวันธรรมดา แต่งหน้าออกงาน</span><span>฿1,299</span></li>
+          <li class="flex justify-between"><span>โปร 3 ครั้ง (เฉลี่ยต่อครั้ง)</span><span>฿899</span></li>
+          <li class="flex justify-between"><span>แต่งหน้ารับปริญญา</span><span>฿699</span></li>
+        </ul>
+      </div>
+      <img src="/Photo/makeup2.jpg" class="w-[360px] rounded-xl shadow" />
+    </div>
+
+  </div><!-- end #tab-promo -->
 
 </section>
 
@@ -142,13 +214,7 @@
   </div>
 </footer>
 
-<script>
-  // แปลง short URL เป็น embed URL อัตโนมัติโดยใช้ place จาก link
-  // link: https://maps.app.goo.gl/mrgMQ79foycjR8Sf9
-  // ใช้ embed แบบ search query แทน เพราะ short URL redirect ไม่สามารถ fetch ได้
-  document.getElementById('map-frame').src =
-    "https://maps.google.com/maps?q=Charm+Beauty+Salon+Phayao&output=embed&z=16";
-</script>
+<script src="main.js"></script>
 
 </body>
 </html>
