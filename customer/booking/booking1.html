@@ -5,20 +5,22 @@
   <title>การจอง</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    .cal-day {
-      aspect-ratio: 1;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 50%; font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .cal-day:hover:not(.disabled):not(.empty) { background: #fbcfe8; }
-    .cal-day.selected { background: #ec4899; color: white; }
-    .cal-day.today { border: 2px solid #ec4899; color: #ec4899; }
-    .cal-day.today.selected { color: white; border-color: #ec4899; }
-    .cal-day.disabled { color: #d1d5db; cursor: not-allowed; }
-    .cal-day.empty { cursor: default; }
-    .cal-header-day { text-align: center; font-size: 11px; font-weight: 700; color: #9d174d; padding: 4px 0; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: #fbcfe8; }
+.cal-day.selected { background: #ec4899; color: white; }
+.cal-day.today { border: 2px solid #ec4899; color: #ec4899; }
+.cal-day.today.selected { color: white; border-color: #ec4899; }
+.cal-day.disabled { color: #d1d5db; cursor: not-allowed; }
+.cal-day.empty { cursor: default; }
+
+.cal-header-day { text-align: center; font-size: 11px; font-weight: 700; color: #9d174d; padding: 4px 0; }
   </style>
 </head>
 
@@ -51,7 +53,6 @@
           <div>
             <label class="font-semibold block mb-2">วันที่</label>
             <div class="relative inline-block w-full">
-              <!-- Display button -->
               <button id="dateDisplay" onclick="toggleCalendar()"
                 class="w-full bg-pink-100 rounded-full px-5 py-2 border flex items-center justify-between gap-2 hover:bg-pink-200 transition-colors">
                 <span id="dateLabel" class="text-gray-500 text-sm font-semibold">เลือกวันที่</span>
@@ -64,15 +65,11 @@
               <div id="calendarPopup"
                 class="hidden absolute top-11 left-0 z-50 bg-white border border-pink-200 rounded-2xl shadow-xl p-4"
                 style="width:260px;">
-
-                <!-- Month nav -->
                 <div class="flex items-center justify-between mb-3">
                   <button onclick="prevMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">‹</button>
                   <span id="monthLabel" class="font-bold text-gray-800 text-xs"></span>
                   <button onclick="nextMonth()" class="w-7 h-7 rounded-full hover:bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-lg">›</button>
                 </div>
-
-                <!-- Day headers -->
                 <div class="calendar-grid mb-1">
                   <div class="cal-header-day">อา</div>
                   <div class="cal-header-day">จ</div>
@@ -82,8 +79,6 @@
                   <div class="cal-header-day">ศ</div>
                   <div class="cal-header-day">ส</div>
                 </div>
-
-                <!-- Days -->
                 <div class="calendar-grid" id="daysGrid"></div>
               </div>
             </div>
@@ -195,110 +190,7 @@
     </div>
   </div>
 
-  <script>
-    // ===== CALENDAR =====
-    const thMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
-                      'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-
-    const today = new Date(); today.setHours(0,0,0,0);
-    let calYear = today.getFullYear();
-    let calMonth = today.getMonth();
-    let selectedDate = null;
-
-    function toggleCalendar() {
-      document.getElementById('calendarPopup').classList.toggle('hidden');
-    }
-
-    function closeCalendar() {
-      document.getElementById('calendarPopup').classList.add('hidden');
-    }
-
-    document.addEventListener('click', e => {
-      const popup = document.getElementById('calendarPopup');
-      const btn = document.getElementById('dateDisplay');
-      if (!popup.contains(e.target) && !btn.contains(e.target)) closeCalendar();
-    });
-
-    function prevMonth() {
-      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
-      renderCalendar();
-    }
-
-    function nextMonth() {
-      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
-      renderCalendar();
-    }
-
-    function renderCalendar() {
-      document.getElementById('monthLabel').textContent = `${thMonths[calMonth]} ${calYear + 543}`;
-      const grid = document.getElementById('daysGrid');
-      grid.innerHTML = '';
-
-      const firstDay = new Date(calYear, calMonth, 1).getDay();
-      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-
-      for (let i = 0; i < firstDay; i++) {
-        const el = document.createElement('div');
-        el.className = 'cal-day empty';
-        grid.appendChild(el);
-      }
-
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(calYear, calMonth, d);
-        const isToday = date.getTime() === today.getTime();
-        const isPast = date < today;
-        const isSelected = selectedDate && selectedDate.getTime() === date.getTime();
-
-        const el = document.createElement('div');
-        let cls = 'cal-day';
-        if (isPast) cls += ' disabled';
-        else if (isSelected) cls += ' selected' + (isToday ? ' today' : '');
-        else if (isToday) cls += ' today';
-
-        el.className = cls;
-        el.textContent = d;
-
-        if (!isPast) {
-          el.onclick = () => {
-            selectedDate = new Date(calYear, calMonth, d);
-            const label = `${d} ${thMonths[calMonth]} ${calYear + 543}`;
-            const dateLabel = document.getElementById('dateLabel');
-            dateLabel.textContent = label;
-            dateLabel.classList.remove('text-gray-500');
-            dateLabel.classList.add('text-gray-800');
-            renderCalendar();
-            closeCalendar();
-          };
-        }
-        grid.appendChild(el);
-      }
-    }
-
-    // ===== SERVICE OPTIONS =====
-    const service = document.getElementById('service');
-    const sections = { nail, hair, makeup };
-    const attachBtn = document.getElementById('attachBtn');
-
-    service.onchange = () => {
-      Object.values(sections).forEach(s => s.classList.add('hidden'));
-      attachBtn.disabled = true;
-      attachBtn.className = "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
-      if (sections[service.value]) sections[service.value].classList.remove('hidden');
-    };
-
-    document.addEventListener('change', e => {
-      if (e.target.name === 'opt') {
-        const enable = e.target.value === 'other';
-        attachBtn.disabled = !enable;
-        attachBtn.className = enable
-          ? "px-8 py-2 rounded-full bg-pink-200 border font-semibold"
-          : "px-8 py-2 rounded-full bg-gray-200 border font-semibold cursor-not-allowed";
-      }
-    });
-
-    // Init
-    renderCalendar();
-  </script>
+  <script src="booking1.js"></script>
 
 </body>
 </html>

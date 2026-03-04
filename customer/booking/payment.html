@@ -35,21 +35,17 @@
     }
     .drop-zone:hover .overlay { opacity: 1; }
 
-    /* Confirm modal */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 50; align-items: center; justify-content: center; }
     .modal.show { display: flex; }
     .modal-box { background: white; border-radius: 20px; padding: 36px 40px; width: 380px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.25s ease; }
     @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    /* Toast */
-    .toast { position: fixed; bottom: 28px; right: 28px; background: #10b981; color: white; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; z-index: 100; }
+    .toast { position: fixed; bottom: 28px; right: 28px; color: white; padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; z-index: 100; }
     .toast.show { opacity: 1; transform: translateY(0); }
 
-    /* Progress bar */
     .progress-wrap { width: 100%; height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; margin-top: 8px; display: none; }
     .progress-bar { height: 100%; background: #ec4899; width: 0%; transition: width 0.05s linear; border-radius: 2px; }
 
-    /* Confirm button state */
     .btn-confirm { transition: all 0.2s; }
     .btn-confirm:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236,72,153,0.4); }
     .btn-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -86,7 +82,6 @@
           <p><span class="font-semibold">เลขบัญชี :</span> xxx-x-x-xxxx-x</p>
           <p class="font-semibold text-pink-600">ค่ามัดจำ : 100 บาท</p>
         </div>
-        <!-- Copy account number -->
         <button onclick="copyAccount()"
           class="mt-3 text-xs text-pink-500 hover:text-pink-700 underline transition-colors">
           คัดลอกเลขบัญชี
@@ -103,7 +98,6 @@
           ondragleave="handleDragLeave(event)"
           ondrop="handleDrop(event)">
 
-          <!-- Default state -->
           <div id="uploadPrompt">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2 text-gray-400 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -113,20 +107,19 @@
             <span class="text-xs text-gray-400 mt-1 block">PNG, JPG สูงสุด 5MB</span>
           </div>
 
-          <!-- Preview image (hidden until uploaded) -->
           <img id="previewImg" class="preview hidden" />
           <div class="overlay" id="changeOverlay">
-            <svg class="w-8 h-8 text-white mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9l-3 3m3-3l3 3M12 3v9"/></svg>
+            <svg class="w-8 h-8 text-white mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0-9l-3 3m3-3l3 3M12 3v9"/>
+            </svg>
             <span class="text-white text-xs font-semibold">เปลี่ยนรูป</span>
           </div>
         </div>
 
-        <!-- Upload progress -->
         <div class="progress-wrap" id="progressWrap">
           <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <!-- File name display -->
         <p id="fileName" class="text-xs text-gray-500 mt-2 truncate hidden"></p>
 
         <input id="slip" type="file" accept="image/*" class="hidden" onchange="handleFileSelect(event)" />
@@ -143,9 +136,7 @@
         class="px-6 py-2 rounded-full border border-gray-500 hover:bg-gray-200 transition-colors">
         Cancel
       </a>
-      <button id="confirmBtn"
-        onclick="openConfirmModal()"
-        disabled
+      <button id="confirmBtn" onclick="openConfirmModal()" disabled
         class="btn-confirm px-6 py-2 rounded-full bg-pink-400 text-white">
         Confirm
       </button>
@@ -176,120 +167,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script>
-  let slipUploaded = false;
-
-  // ===== FILE HANDLING =====
-  function handleFileSelect(e) {
-    const file = e.target.files[0];
-    if (file) processFile(file);
-  }
-
-  function handleDragOver(e) {
-    e.preventDefault();
-    document.getElementById('dropZone').classList.add('drag-over');
-  }
-
-  function handleDragLeave(e) {
-    document.getElementById('dropZone').classList.remove('drag-over');
-  }
-
-  function handleDrop(e) {
-    e.preventDefault();
-    document.getElementById('dropZone').classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) processFile(file);
-    else showToast('❌ กรุณาอัปโหลดไฟล์รูปภาพเท่านั้น', '#ef4444');
-  }
-
-  function processFile(file) {
-    if (file.size > 5 * 1024 * 1024) {
-      showToast('❌ ไฟล์ใหญ่เกิน 5MB', '#ef4444'); return;
-    }
-
-    // Show progress
-    const progressWrap = document.getElementById('progressWrap');
-    const progressBar = document.getElementById('progressBar');
-    progressWrap.style.display = 'block';
-    progressBar.style.width = '0%';
-
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.random() * 20;
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(interval);
-        setTimeout(() => { progressWrap.style.display = 'none'; }, 400);
-
-        // Show preview
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const preview = document.getElementById('previewImg');
-          preview.src = ev.target.result;
-          preview.classList.remove('hidden');
-          document.getElementById('uploadPrompt').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-
-        // Show filename
-        const fn = document.getElementById('fileName');
-        fn.textContent = `📎 ${file.name}`;
-        fn.classList.remove('hidden');
-
-        slipUploaded = true;
-        updateConfirmBtn();
-        showToast('✅ อัปโหลด slip สำเร็จ', '#10b981');
-      }
-      progressBar.style.width = progress + '%';
-    }, 60);
-  }
-
-  function updateConfirmBtn() {
-    const btn = document.getElementById('confirmBtn');
-    btn.disabled = !slipUploaded;
-    if (slipUploaded) {
-      btn.classList.remove('opacity-50', 'cursor-not-allowed');
-      btn.classList.add('hover:bg-pink-500');
-    }
-  }
-
-  // ===== COPY ACCOUNT =====
-  function copyAccount() {
-    navigator.clipboard.writeText('xxx-x-x-xxxx-x').then(() => {
-      showToast('📋 คัดลอกเลขบัญชีแล้ว', '#6366f1');
-    });
-  }
-
-  // ===== MODAL =====
-  function openConfirmModal() {
-    if (!slipUploaded) return;
-    document.getElementById('confirmModal').classList.add('show');
-  }
-
-  function closeConfirmModal() {
-    document.getElementById('confirmModal').classList.remove('show');
-  }
-
-  function submitPayment() {
-    closeConfirmModal();
-    showToast('✅ ส่งข้อมูลการชำระเงินแล้ว กำลังไป...', '#10b981');
-    setTimeout(() => { window.location.href = 'thankyou.html'; }, 1500);
-  }
-
-  // ===== TOAST =====
-  function showToast(msg, color = '#10b981') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.background = color;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
-
-  // Close modal on outside click
-  document.getElementById('confirmModal').addEventListener('click', function(e) {
-    if (e.target === this) closeConfirmModal();
-  });
-</script>
+<script src="payment.js"></script>
 
 </body>
 </html>
