@@ -80,7 +80,6 @@ function exitEditMode(restoreOld = false) {
   });
 
   if (restoreOld) {
-    // คืนรูปโลโก้เดิม
     logoPreview.src = oldLogoSrc;
     logoFileInput.value = "";
   }
@@ -106,7 +105,6 @@ editBtn.addEventListener("click", () => {
 
 // ===== SAVE =====
 saveBtn.addEventListener("click", () => {
-  // บันทึกโลโก้ลง localStorage ถ้ามีการเปลี่ยน
   if (logoFileInput.files[0]) {
     localStorage.setItem("shopLogo", logoPreview.src);
   }
@@ -118,4 +116,44 @@ saveBtn.addEventListener("click", () => {
 // ===== CANCEL BUTTON =====
 cancelBtn.addEventListener("click", () => {
   exitEditMode(true);
+});
+
+
+// ===== LOGOUT =====
+const logoutBtn        = document.getElementById("logoutBtn");
+const logoutModal      = document.getElementById("logoutModal");
+const cancelLogoutBtn  = document.getElementById("cancelLogoutBtn");
+const confirmLogoutBtn = document.getElementById("confirmLogoutBtn");
+const toast            = document.getElementById("toast");
+
+function showLogoutModal() {
+  logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  logoutModal.classList.add("hidden");
+}
+
+function showToast(message, color) {
+  toast.textContent = message;
+  toast.style.backgroundColor = color;
+  toast.classList.remove("hidden");
+  setTimeout(() => toast.classList.add("hidden"), 1200);
+}
+
+function confirmLogout() {
+  localStorage.removeItem("charm_logged_in");
+  closeLogoutModal();
+  showToast("👋 ออกจากระบบแล้ว", "#6366f1");
+  setTimeout(() => {
+    window.location.href = "/customer/login/login.html";
+  }, 1200);
+}
+
+logoutBtn.addEventListener("click", showLogoutModal);
+cancelLogoutBtn.addEventListener("click", closeLogoutModal);
+confirmLogoutBtn.addEventListener("click", confirmLogout);
+
+logoutModal.addEventListener("click", (e) => {
+  if (e.target === logoutModal) closeLogoutModal();
 });
