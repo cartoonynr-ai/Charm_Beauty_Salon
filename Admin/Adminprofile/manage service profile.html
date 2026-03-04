@@ -35,7 +35,7 @@
     <div class="flex gap-4">
 
       <!-- ตั้งค่าบริการ -->
-      <button class="flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm shadow mr-5 border border-black" onclick="location.href='manageserviceday.html'">
+      <a href="/Admin/homeadmin/home.html" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm shadow mr-5 border border-black">
         <svg xmlns="http://www.w3.org/2000/svg"
           fill="none" viewBox="0 0 24 24"
           stroke-width="1.5" stroke="currentColor"
@@ -44,10 +44,10 @@
             d="M3 3h7v7H3V3Zm11 0h7v7h-7V3ZM3 14h7v7H3v-7Zm11 3.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0Z"/>
         </svg>
         <span class="font-semibold">ตั้งค่าบริการ</span>
-      </button>
+      </a>
 
       <!-- ออกจากระบบ -->
-      <button class="flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm shadow mr-40 border border-black">
+      <button id="logoutBtn" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full text-sm shadow mr-40 border border-black">
         <svg xmlns="http://www.w3.org/2000/svg"
           fill="none" viewBox="0 0 24 24"
           stroke-width="1.5" stroke="currentColor"
@@ -165,6 +165,26 @@
 
     <div class="w-32 bg-pink-200"></div>
   </div>
+
+  <!-- ===== LOGOUT MODAL ===== -->
+  <div id="logoutModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-8 shadow-xl text-center w-80">
+      <p class="text-lg font-semibold mb-6">ต้องการออกจากระบบใช่ไหม?</p>
+      <div class="flex justify-center gap-4">
+        <button id="cancelLogoutBtn"
+          class="px-6 py-2 rounded-xl border border-black bg-gray-200 hover:bg-gray-300">
+          ยกเลิก
+        </button>
+        <button id="confirmLogoutBtn"
+          class="px-6 py-2 rounded-xl border border-black bg-pink-300 hover:bg-pink-400">
+          ยืนยัน
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toast" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-lg z-50 text-sm font-semibold"></div>
 
   <script src="/logo.js"></script>
   <script src="manage service profile.js"></script>
