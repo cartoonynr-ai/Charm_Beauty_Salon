@@ -18,16 +18,18 @@
  
   <nav class="flex-1 flex justify-center gap-12 text-white font-medium">
     <a href="/Admin/homeadmin/home.html" class="hover:underline cursor-pointer transition">หน้าหลัก</a>
-    <a href="/Admin/Album/albumHair/album Hair edit1.html" class="hover:underline cursor-pointer transition">อัลบั้ม</a>
+    <a href="/Admin/Album/albumNail/album Nail edit1.html" class="hover:underline cursor-pointer transition">อัลบั้ม</a>
     <a href="/Admin/manageserviceday/manageserviceday.html" class="hover:underline cursor-pointer transition">การจอง</a>
   </nav>
  
   <div class="flex items-center gap-6 text-white">
     <div class="relative">
+      <a href="/Admin/homeadmin/Noctification edit.html">
       <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 2a6 6 0 00-6 6v4l-2 3h16l-2-3V8a6 6 0 00-6-6z"/>
         <circle cx="12" cy="21" r="1.5"/>
       </svg>
+    </a>
       <span class="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full"></span>
     </div>
  
@@ -64,10 +66,17 @@
 <section class="max-w-6xl mx-auto flex justify-center gap-10 py-16">
  
   <div class="bg-white rounded-2xl p-8 w-[420px] shadow">
-    <h2 class="text-lg font-bold mb-2 text-center">Charm Beauty</h2>
-    <p>หน้ามอพะเยา ซอยข้างพีเจไนท์</p>
-    <p class="mt-2">เบอร์โทรติดต่อ : 085-6218731</p>
+      <input type="text"
+  placeholder="ชื่อร้าน"
+  class="w-full text-lg font-bold text-center mb-2 border rounded px-2 py-1">
+
+    <input type="text" placeholder="ที่อยู่ร้าน"
+    class="w-full border rounded px-2 py-1 text-sm">
+
+    <input type="text" placeholder="เบอร์โทร"
+    class="w-full border rounded px-2 py-1 text-sm mt-2">
   </div>
+
  
   <!-- Google Map Embed -->
   <div class="w-[420px] h-[240px] rounded-xl overflow-hidden shadow">
@@ -347,7 +356,7 @@
 <!-- ================= END FOOTER ================= -->
  
  
-<script src="Home.js"></script>
+<script src="home.js"></script>
  
 </body>
 </html>

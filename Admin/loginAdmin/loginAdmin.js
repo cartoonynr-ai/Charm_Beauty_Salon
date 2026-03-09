@@ -17,9 +17,26 @@ togglePassword.addEventListener('click', () => {
 const signInBtn = document.getElementById('signInBtn');
 const usernameInput = document.getElementById('usernameInput');
 
+// อีเมลและรหัสผ่านที่อนุญาต
+const correctEmail = "CharmAdmin@gmail.com";
+const correctPassword = "123456";
+
 signInBtn.addEventListener('click', (e) => {
+
+  // เช็คว่ากรอกหรือยัง
   if (!usernameInput.value.trim() || !passwordInput.value.trim()) {
     e.preventDefault();
-    alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน');
+    alert('กรุณากรอกอีเมลและรหัสผ่าน');
+    return;
   }
+
+  // เช็คว่า Email และ Password ถูกต้องไหม
+  if (usernameInput.value !== correctEmail || passwordInput.value !== correctPassword) {
+    e.preventDefault();
+    alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+    return;
+  }
+
+  // ถ้าถูกต้อง
+  alert("เข้าสู่ระบบสำเร็จ");
 });
