@@ -4,82 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20%,60%  { transform: translateX(-6px); }
-  40%,80%  { transform: translateX(6px); }
-}
-.shake { animation: shake 0.4s ease; }
+    * { box-sizing: border-box; }
+    body { font-family: 'Fahkwang', sans-serif; margin: 0; padding: 0; width: 1920px; min-height: 957px; background: #FFE6EA; }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-.spinner {
-  width: 16px; height: 16px;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  display: inline-block; vertical-align: middle;
-}
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+    .shake { animation: shake 0.4s ease; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
 
-.toast {
-  position: fixed; bottom: 28px; right: 28px;
-  color: white; padding: 12px 22px; border-radius: 10px;
-  font-size: 13px; font-weight: 600;
-  opacity: 0; transform: translateY(10px);
-  transition: all 0.3s; pointer-events: none; z-index: 100;
-}
-.toast.show { opacity: 1; transform: translateY(0); }
+    .toast { position:fixed; bottom:28px; right:28px; color:white; padding:12px 22px; border-radius:10px; font-size:13px; font-weight:600; opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; z-index:100; }
+    .toast.show { opacity:1; transform:translateY(0); }
 
-input:focus { outline: none; box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6 !important; }
-input.error { border-color: #f87171 !important; box-shadow: 0 0 0 2px #fca5a5 !important; }
+    input:focus { outline: none; box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6 !important; }
+    input.error { border-color: #f87171 !important; box-shadow: 0 0 0 2px #fca5a5 !important; }
+    .error-msg { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
+    .error-msg.show { display: block; }
 
-.error-msg { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
-.error-msg.show { display: block; }
-
-.pw-wrap { position: relative; }
-.toggle-pw {
-  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; cursor: pointer; color: #9ca3af; padding: 0;
-}
-.toggle-pw:hover { color: #ec4899; }
+    .pw-wrap { position: relative; }
+    .toggle-pw { position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9ca3af; padding:0; }
+    .toggle-pw:hover { color: #ec4899; }
   </style>
 </head>
-<body class="bg-pink-100 font-sans">
+<body>
 
   <!-- Header -->
-  <header class="bg-pink-400 h-20 flex items-center px-6">
-    <a href="/customer/login/login.html" class="text-white">
+  <div class="bg-pink-400 px-5 py-4 flex items-center flex-shrink-0">
+    <button onclick="history.back()" class="text-white">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
         <path d="M15 19l-7-7 7-7"/>
       </svg>
-    </a>
-  </header>
+    </button>
+  </div>
 
-  <!-- Main Content -->
-  <div class="flex flex-col md:flex-row p-6 gap-6 items-start">
+  <!-- Main Layout -->
+  <div style="display:flex; height:800px; min-height:800px; width:1920px;">
 
-    <!-- Left Section -->
-    <div class="md:w-5/6 flex flex-col items-center gap-6 bg-white p-6 rounded-xl shadow">
-      <img src="/Photo/logo.jpg" alt="Logo" class="w-250 h-100 object-contain -mt-6" />
-      <div class="text-center text-pink-600 font-bold text-4xl leading-tight"></div>
+    <!-- Left Panel -->
+    <div style="width:700px; min-width:700px; background:white; display:flex; flex-direction:column; align-items:flex-start; padding:36px 40px; box-shadow:2px 0 8px rgba(0,0,0,0.06);">
+
+      <img src="/Photo/logo.jpg" alt="Logo" style="width:160px; object-fit:contain; margin-bottom:32px;" />
 
       <!-- Username -->
-      <div class="w-72">
-        <label class="block text-black-600 font-semibold mb-1 text-left -mt-20">Enter your username</label>
+      <div style="width:100%; margin-bottom:16px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">Enter your username</label>
         <input id="username" type="text" placeholder="username"
-          class="bg-gray-200 rounded-2xl border border-gray-400 shadow-md px-8 py-3 text-xl w-full focus:outline-none"
+          style="width:100%; background:#f0f0f0; border:1px solid #ddd; border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Fahkwang',sans-serif;"
           oninput="clearErr('username','username-error')"
           onkeydown="if(event.key==='Enter') document.getElementById('password').focus()" />
         <p class="error-msg" id="username-error">กรุณากรอก username</p>
       </div>
 
       <!-- Password -->
-      <div class="w-72">
-        <label class="block text-black-600 font-semibold mb-1 text-left">Enter your password</label>
+      <div style="width:100%; margin-bottom:16px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">Enter your password</label>
         <div class="pw-wrap">
           <input id="password" type="password" placeholder="password"
-            class="bg-gray-200 rounded-2xl border border-gray-400 shadow-md px-8 py-3 text-xl w-full focus:outline-none"
+            style="width:100%; background:#f0f0f0; border:1px solid #ddd; border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Fahkwang',sans-serif;"
             oninput="clearErr('password','password-error')"
             onkeydown="if(event.key==='Enter') doLogin()" />
           <button class="toggle-pw" onclick="togglePw()" title="แสดง/ซ่อน">
@@ -92,33 +74,33 @@ input.error { border-color: #f87171 !important; box-shadow: 0 0 0 2px #fca5a5 !i
       </div>
 
       <!-- Forgot Password -->
-      <div class="w-72 text-right">
-        <a href="/customer/recovery/recovery.html" class="text-sm text-pink-500 hover:underline">Forgot password?</a>
+      <div style="width:100%; text-align:right; margin-bottom:28px;">
+        <a href="/customer/recovery/recovery.html" style="font-size:12px; color:#ec4899; text-decoration:none;">Forgot password?</a>
       </div>
 
       <!-- Buttons -->
-      <div class="flex gap-4 w-72">
-        <a href="/customer/register/register1.html" class="w-1/2">
-          <button class="rounded-2xl bg-pink-200 hover:bg-pink-300 border border-black font-semibold py-2 px-6 w-full transition-all hover:-translate-y-0.5">Sign up</button>
+      <div style="display:flex; gap:12px; width:100%;">
+        <a href="/customer/register/register1.html" style="width:50%;">
+          <button style="width:100%; background:#fce7f3; border:1px solid #000; border-radius:8px; padding:9px 0; font-size:14px; font-weight:600; cursor:pointer;">Sign up</button>
         </a>
         <button id="loginBtn" onclick="doLogin()"
-          class="rounded-2xl bg-pink-200 hover:bg-pink-300 border border-black font-semibold py-2 px-6 w-1/2 transition-all hover:-translate-y-0.5">
+          style="width:50%; background:#fce7f3; border:1px solid #000; border-radius:8px; padding:9px 0; font-size:14px; font-weight:600; cursor:pointer;">
           Log in
         </button>
       </div>
+
     </div>
 
-    <!-- Right Section: Images -->
-    <div class="md:w-1/3 flex flex-col gap-6 items-end">
-      <img src="/Photo/19.png" alt="Nail Polish" class="rounded shadow w-80" />
+    <!-- Right Panel -->
+    <div style="flex:1; display:flex; flex-direction:row; gap:16px; padding:24px; overflow:hidden; align-items:center;">
+      <img src="/Photo/19.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#f9a8d4'; this.removeAttribute('src');" />
+      <img src="/Photo/20.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#fbcfe8'; this.removeAttribute('src');" />
+      <img src="/Photo/21.png" style="flex:1; height:80%; object-fit:cover; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" onerror="this.style.background='#fce7f3'; this.removeAttribute('src');" />
     </div>
-    <img src="/Photo/20.png" alt="Hair Styling" class="rounded shadow w-80 md:w-2/2" />
-    <img src="/Photo/21.png" alt="Salon Interior" class="rounded shadow w-80" />
+
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
-
   <script src="login1.js"></script>
 
 </body>
