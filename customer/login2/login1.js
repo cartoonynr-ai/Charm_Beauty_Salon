@@ -1,4 +1,5 @@
-// ===== Toggle Password =====
+// ===== login1.js =====
+
 let pwVisible = false;
 function togglePw() {
   pwVisible = !pwVisible;
@@ -8,13 +9,11 @@ function togglePw() {
     : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
 }
 
-// ===== Clear error =====
 function clearErr(inputId, errId) {
   document.getElementById(inputId).classList.remove('error');
   document.getElementById(errId).classList.remove('show');
 }
 
-// ===== Show error + shake =====
 function showErr(inputId, errId, msg) {
   const input = document.getElementById(inputId);
   const err   = document.getElementById(errId);
@@ -24,7 +23,6 @@ function showErr(inputId, errId, msg) {
   setTimeout(() => input.classList.remove('shake'), 400);
 }
 
-// ===== Login =====
 function doLogin() {
   const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value;
@@ -32,20 +30,31 @@ function doLogin() {
 
   if (!username) { showErr('username', 'username-error', 'กรุณากรอก username'); ok = false; }
   if (!password) { showErr('password', 'password-error', 'กรุณากรอกรหัสผ่าน'); ok = false; }
-  else if (password.length < 4) { showErr('password', 'password-error', 'รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร'); ok = false; }
   if (!ok) return;
 
-  // บันทึก username ลง localStorage
-  localStorage.setItem('charm_username', username);
+  // เช็ค username + password กับที่สมัครไว้
+  const savedUsername = localStorage.getItem('charm_username') || '';
+  const savedPassword = localStorage.getItem('charm_password') || '';
+
+  if (username !== savedUsername) {
+    showErr('username', 'username-error', 'ไม่พบชื่อผู้ใช้นี้ในระบบ');
+    return;
+  }
+  if (password !== savedPassword) {
+    showErr('password', 'password-error', 'รหัสผ่านไม่ถูกต้อง');
+    return;
+  }
+
+  // บันทึก session
   localStorage.setItem('charm_logged_in', 'true');
 
   const btn = document.getElementById('loginBtn');
   btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
+  btn.disabled  = true;
 
   setTimeout(() => {
     btn.innerHTML = 'Log in';
-    btn.disabled = false;
+    btn.disabled  = false;
     showToast('✅ เข้าสู่ระบบสำเร็จ', '#10b981');
     setTimeout(() => {
       window.location.href = '/customer/main loged/main loged.html';
@@ -53,10 +62,9 @@ function doLogin() {
   }, 1200);
 }
 
-// ===== Toast =====
 function showToast(msg, color) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.textContent      = msg;
   t.style.background = color;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);

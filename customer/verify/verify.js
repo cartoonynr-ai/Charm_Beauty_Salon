@@ -77,7 +77,7 @@ function verifyOtp() {
     errEl.classList.remove('show');
     boxes.forEach(b => b.classList.add('correct'));
     showToast('✅ ยืนยัน OTP สำเร็จ', '#10b981');
-    setTimeout(() => { window.location.href = 'new-password.html'; }, 1200);
+    setTimeout(() => { window.location.href = '/customer/verify/new-password.html'; }, 1200);
   } else {
     errEl.textContent = 'รหัส OTP ไม่ถูกต้อง กรุณาลองใหม่';
     errEl.classList.add('show');

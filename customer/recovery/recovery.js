@@ -1,4 +1,6 @@
-// ===== Validation =====
+// ===== recovery.js  (ใช้ CharmStorage) =====
+// ต้องโหลด storage.js ก่อน: <script src="/customer/storage.js"></script>
+
 function clearErr() {
   const input = document.getElementById('emailInput');
   const err   = document.getElementById('emailError');
@@ -10,7 +12,6 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// ===== Submit =====
 function doSubmit() {
   const input = document.getElementById('emailInput');
   const err   = document.getElementById('emailError');
@@ -24,14 +25,16 @@ function doSubmit() {
     return;
   }
 
-  // Loading state
+  // ✅ บันทึกอีเมลไว้สำหรับ verify/new-password
+  CharmStorage.setPendingEmail(email);
+
   const btn = document.getElementById('submitBtn');
   btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
+  btn.disabled  = true;
 
   setTimeout(() => {
     btn.innerHTML = 'ยืนยัน';
-    btn.disabled = false;
+    btn.disabled  = false;
     showToast('✅ ส่งรหัสไปยัง ' + email + ' แล้ว', '#10b981');
     setTimeout(() => {
       window.location.href = '/customer/verify/verify.html';
@@ -39,10 +42,9 @@ function doSubmit() {
   }, 1200);
 }
 
-// ===== Toast =====
 function showToast(msg, color = '#10b981') {
   const t = document.getElementById('toast');
-  t.textContent    = msg;
+  t.textContent      = msg;
   t.style.background = color;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2800);

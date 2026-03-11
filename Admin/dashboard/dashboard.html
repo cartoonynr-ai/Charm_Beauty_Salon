@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Charm Beauty</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Sarabun', sans-serif; }
+
+    body { background: #fdf0f2; }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 2px 16px rgba(236,72,153,0.07);
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+      border-radius: 16px;
+      color: white;
+    }
+    .stat-card.blue {
+      background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+    }
+    .stat-card.green {
+      background: linear-gradient(135deg, #86efac 0%, #22c55e 100%);
+    }
+    .stat-card.purple {
+      background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 100%);
+    }
+
+    .status-badge {
+      padding: 3px 12px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-confirmed { background:#dbeafe; color:#1d4ed8; }
+    .badge-cancelled { background:#fee2e2; color:#dc2626; }
+    .badge-done      { background:#dcfce7; color:#16a34a; }
+
+    .time-slot {
+      border-left: 3px solid #f472b6;
+      padding-left: 12px;
+    }
+    .time-slot.empty {
+      border-left-color: #e5e7eb;
+    }
+
+    .booking-row:hover { background: #fff1f5; }
+
+    /* Timeline dot */
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #f472b6;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .dot.empty { background: #e5e7eb; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #fce7f3; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 10px; }
+
+    .fade-in { animation: fadeIn 0.4s ease both; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+    .tab-btn { border-radius: 99px; padding: 6px 18px; font-size: 0.85rem; font-weight: 600; transition: all .2s; cursor:pointer; }
+    .tab-btn.active { background:#f472b6; color:white; }
+    .tab-btn:not(.active) { background:white; color:#9ca3af; border:1px solid #f3f4f6; }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="bg-pink-400 h-16 flex items-center justify-between px-8 shadow-sm">
+  <div class="flex items-center gap-4">
+    <img src="/Photo/logo.jpg" alt="Logo" class="h-10 object-contain">
+    <span class="text-white font-bold text-lg tracking-wide">Admin Dashboard</span>
+  </div>
+  <nav class="flex gap-6 text-white text-sm font-medium">
+    <a href="/Admin/homeadmin/home.html" class="hover:underline opacity-80 hover:opacity-100">หน้าหลัก</a>
+    <a href="/Admin/Album/albumNail/album Nail edit1.html" class="hover:underline opacity-80 hover:opacity-100">อัลบั้ม</a>
+    <a href="/Admin/manageserviceday/manageserviceday.html" class="hover:underline opacity-80 hover:opacity-100">การจอง</a>
+  </nav>
+  <div class="flex items-center gap-3">
+    <span id="clock" class="text-white text-sm font-mono opacity-90"></span>
+    <a href="/Admin/Adminprofile/manage service profile.html" class="text-white hover:opacity-80">
+      <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 22c0-4 4-6 8-6s8 2 8 6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+  <!-- DATE DISPLAY -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">ภาพรวมการจองวันนี้</h1>
+      <p id="dateDisplay" class="text-gray-400 text-sm mt-1"></p>
+    </div>
+    <button onclick="refreshDashboard()"
+      class="flex items-center gap-2 bg-pink-400 hover:bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold transition shadow">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0115.8-2.8M20 15a9 9 0 01-15.8 2.8"/>
+      </svg>
+      รีเฟรช
+    </button>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="statCards"></div>
+
+  <!-- MAIN GRID -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- TODAY TIMELINE -->
+    <div class="lg:col-span-2 card p-6 fade-in">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold text-gray-800 text-lg">ตารางการจองวันนี้</h2>
+        <div class="flex gap-2" id="tabBtns">
+          <button class="tab-btn active" onclick="setFilter('all', this)">ทั้งหมด</button>
+          <button class="tab-btn" onclick="setFilter('confirmed', this)">จองคิว</button>
+          <button class="tab-btn" onclick="setFilter('done', this)">เสร็จแล้ว</button>
+          <button class="tab-btn" onclick="setFilter('cancelled', this)">ยกเลิก</button>
+        </div>
+      </div>
+      <div id="bookingList" class="space-y-3 max-h-[480px] overflow-y-auto pr-1"></div>
+    </div>
+
+    <!-- SIDE PANEL -->
+    <div class="space-y-5">
+
+      <!-- SERVICE SUMMARY -->
+      <div class="card p-5 fade-in">
+        <h2 class="font-bold text-gray-800 mb-4">บริการยอดนิยมวันนี้</h2>
+        <div id="serviceSummary" class="space-y-3"></div>
+      </div>
+
+      <!-- UPCOMING -->
+      <div class="card p-5 fade-in">
+        <h2 class="font-bold text-gray-800 mb-4">คิวถัดไป</h2>
+        <div id="nextBooking"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ALL BOOKINGS TABLE -->
+  <div class="card p-6 mt-6 fade-in">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-bold text-gray-800 text-lg">ประวัติการจองทั้งหมด</h2>
+      <input id="searchInput" oninput="renderTable()" type="text" placeholder="ค้นหา..."
+        class="border border-gray-200 rounded-full px-4 py-1.5 text-sm focus:outline-none focus:border-pink-300 w-48">
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left border-b border-gray-100">
+            <th class="pb-3 text-gray-400 font-semibold">วันที่</th>
+            <th class="pb-3 text-gray-400 font-semibold">เวลา</th>
+            <th class="pb-3 text-gray-400 font-semibold">บริการ</th>
+            <th class="pb-3 text-gray-400 font-semibold">ออปชั่น</th>
+            <th class="pb-3 text-gray-400 font-semibold">ราคา</th>
+            <th class="pb-3 text-gray-400 font-semibold">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody id="allBookingsBody"></tbody>
+      </table>
+    </div>
+    <p id="emptyMsg" class="text-center text-gray-300 py-8 hidden">ยังไม่มีการจอง</p>
+  </div>
+
+</div>
+
+<script>
+// ===== UTILS =====
+function getBookings() {
+  try { return JSON.parse(localStorage.getItem('charm_bookings') || '[]'); } catch(e) { return []; }
+}
+
+function getTodayStr() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function statusTh(s) {
+  return { confirmed:'จองคิวสำเร็จ', cancelled:'ยกเลิกแล้ว', done:'เสร็จสิ้น' }[s] || s;
+}
+
+function badgeClass(s) {
+  return { confirmed:'badge-confirmed', cancelled:'badge-cancelled', done:'badge-done' }[s] || 'badge-confirmed';
+}
+
+// ===== CLOCK =====
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ===== DATE DISPLAY =====
+function setDateDisplay() {
+  const d = new Date();
+  document.getElementById('dateDisplay').textContent =
+    d.toLocaleDateString('th-TH', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+
+// ===== STAT CARDS =====
+function renderStats(bookings) {
+  const today = getTodayStr();
+  const todayBookings = bookings.filter(b => b.date === today);
+  const total      = bookings.length;
+  const todayCount = todayBookings.length;
+  const confirmed  = todayBookings.filter(b => b.status === 'confirmed').length;
+  const cancelled  = todayBookings.filter(b => b.status === 'cancelled').length;
+
+  const revenue = todayBookings
+    .filter(b => b.status !== 'cancelled')
+    .reduce((sum, b) => sum + (parseInt((b.price||'').replace(/\D/g,'')) || 0), 0);
+
+  const stats = [
+    { label:'จองวันนี้', value: todayCount + ' คิว',    cls:'stat-card',       icon:'📅' },
+    { label:'รอให้บริการ', value: confirmed + ' คิว',   cls:'stat-card blue',  icon:'⏳' },
+    { label:'ยกเลิกวันนี้', value: cancelled + ' คิว',  cls:'stat-card purple',icon:'❌' },
+    { label:'ยอดรวมวันนี้', value: '฿' + revenue.toLocaleString(), cls:'stat-card green', icon:'💰' },
+  ];
+
+  document.getElementById('statCards').innerHTML = stats.map(s => `
+    <div class="${s.cls} p-5 shadow fade-in">
+      <div class="text-2xl mb-1">${s.icon}</div>
+      <div class="text-2xl font-bold">${s.value}</div>
+      <div class="text-sm opacity-80 mt-1">${s.label}</div>
+    </div>`).join('');
+}
+
+// ===== BOOKING LIST (today timeline) =====
+let currentFilter = 'all';
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBookingList();
+}
+
+function renderBookingList() {
+  const today = getTodayStr();
+  let bookings = getBookings().filter(b => b.date === today);
+  if (currentFilter !== 'all') bookings = bookings.filter(b => b.status === currentFilter);
+
+  // เรียงตามเวลา
+  bookings.sort((a,b) => (a.time||'').localeCompare(b.time||''));
+
+  const el = document.getElementById('bookingList');
+  if (bookings.length === 0) {
+    el.innerHTML = `<div class="text-center text-gray-300 py-12">
+      <div class="text-4xl mb-3">📋</div>
+      <p>ไม่มีการจองวันนี้</p>
+    </div>`;
+    return;
+  }
+
+  el.innerHTML = bookings.map(b => `
+    <div class="booking-row flex items-start gap-4 p-3 rounded-xl transition cursor-pointer" onclick="markDone(${b.id})">
+      <div class="dot ${b.status === 'cancelled' ? 'empty' : ''}"></div>
+      <div class="time-slot ${b.status === 'cancelled' ? 'empty' : ''} flex-1">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-gray-800">${b.time || '-'} น.</span>
+          <span class="status-badge ${badgeClass(b.status)}">${statusTh(b.status)}</span>
+        </div>
+        <div class="text-gray-600 text-sm mt-0.5">${b.service || '-'}${b.option ? ' · ' + b.option : ''}</div>
+        <div class="text-pink-400 text-sm font-semibold">${b.price ? '฿' + b.price : ''}</div>
+      </div>
+    </div>`).join('');
+}
+
+// กดที่คิว → mark เป็น done
+function markDone(id) {
+  let bookings = getBookings();
+  const b = bookings.find(b => b.id === id);
+  if (!b || b.status === 'cancelled') return;
+  if (b.status === 'done') return;
+  if (!confirm(`ยืนยันว่าให้บริการ "${b.service}" เสร็จแล้ว?`)) return;
+  b.status = 'done';
+  localStorage.setItem('charm_bookings', JSON.stringify(bookings));
+  refreshDashboard();
+}
+
+// ===== SERVICE SUMMARY =====
+function renderServiceSummary(bookings) {
+  const today = getTodayStr();
+  const todayActive = bookings.filter(b => b.date === today && b.status !== 'cancelled');
+
+  const counts = {};
+  todayActive.forEach(b => {
+    const key = b.service || 'อื่นๆ';
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  const total = todayActive.length || 1;
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+
+  const colors = ['bg-pink-400','bg-blue-400','bg-purple-400','bg-green-400','bg-yellow-400'];
+
+  const el = document.getElementById('serviceSummary');
+  if (sorted.length === 0) {
+    el.innerHTML = '<p class="text-gray-300 text-sm text-center py-4">ยังไม่มีข้อมูล</p>';
+    return;
+  }
+
+  el.innerHTML = sorted.map(([name, count], i) => `
+    <div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="font-medium text-gray-700">${name}</span>
+        <span class="text-gray-400">${count} คิว</span>
+      </div>
+      <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div class="${colors[i % colors.length]} h-full rounded-full transition-all"
+          style="width:${Math.round(count/total*100)}%"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ===== NEXT BOOKING =====
+function renderNextBooking(bookings) {
+  const today = getTodayStr();
+  const now   = new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }).replace(':','.');
+
+  const upcoming = bookings
+    .filter(b => b.date === today && b.status === 'confirmed' && (b.time||'') >= now)
+    .sort((a,b) => (a.time||'').localeCompare(b.time||''));
+
+  const el = document.getElementById('nextBooking');
+  if (upcoming.length === 0) {
+    el.innerHTML = '<p class="text-gray-300 text-sm text-center py-4">ไม่มีคิวที่รอดำเนินการ</p>';
+    return;
+  }
+  const next = upcoming[0];
+  el.innerHTML = `
+    <div class="bg-pink-50 rounded-2xl p-4 text-center">
+      <div class="text-3xl font-bold text-pink-500 mb-1">${next.time} น.</div>
+      <div class="font-semibold text-gray-800">${next.service || '-'}</div>
+      ${next.option ? `<div class="text-gray-500 text-sm">${next.option}</div>` : ''}
+      ${next.price  ? `<div class="text-pink-400 font-bold mt-2">฿${next.price}</div>` : ''}
+      ${upcoming.length > 1 ? `<div class="text-xs text-gray-400 mt-3">+ อีก ${upcoming.length-1} คิวรออยู่</div>` : ''}
+    </div>`;
+}
+
+// ===== ALL BOOKINGS TABLE =====
+function renderTable() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let bookings = getBookings();
+
+  if (q) {
+    bookings = bookings.filter(b =>
+      (b.service||'').toLowerCase().includes(q) ||
+      (b.option||'').toLowerCase().includes(q) ||
+      (b.date_th||b.date||'').includes(q) ||
+      (b.time||'').includes(q)
+    );
+  }
+
+  bookings.sort((a,b) => b.id - a.id); // ใหม่ขึ้นก่อน
+
+  const tbody = document.getElementById('allBookingsBody');
+  const empty = document.getElementById('emptyMsg');
+
+  if (bookings.length === 0) {
+    tbody.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  tbody.innerHTML = bookings.map(b => `
+    <tr class="border-b border-gray-50 hover:bg-pink-50 transition">
+      <td class="py-3 text-gray-600">${b.date_th || b.date || '-'}</td>
+      <td class="py-3 font-medium">${b.time || '-'} น.</td>
+      <td class="py-3 text-gray-700">${b.service || '-'}</td>
+      <td class="py-3 text-gray-500">${b.option || '-'}</td>
+      <td class="py-3 text-pink-500 font-semibold">${b.price ? '฿'+b.price : '-'}</td>
+      <td class="py-3">
+        <span class="status-badge ${badgeClass(b.status)}">${statusTh(b.status)}</span>
+      </td>
+    </tr>`).join('');
+}
+
+// ===== REFRESH ALL =====
+function refreshDashboard() {
+  const bookings = getBookings();
+  renderStats(bookings);
+  renderBookingList();
+  renderServiceSummary(bookings);
+  renderNextBooking(bookings);
+  renderTable();
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  setDateDisplay();
+  refreshDashboard();
+});
+</script>
+</body>
+</html>

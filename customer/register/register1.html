@@ -1,67 +1,35 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ms Charm Beauty Salon - สมัครสมาชิก</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-    body {
-      font-family: 'Fahkwang', sans-serif;
-      margin: 0; padding: 0;
-      width: 1920px; min-height: 957px;
-      background: #FFE6EA;
-    }
+    body { font-family: 'Fahkwang', sans-serif; margin: 0; padding: 0; width: 1920px; min-height: 957px; background: #FFE6EA; }
+
     @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
     .shake { animation: shake 0.4s ease; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner { width:16px; height:16px; border:2px solid rgba(0,0,0,0.2); border-top-color:#111; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
+    .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
+
     .toast { position:fixed; bottom:28px; right:28px; color:white; padding:12px 22px; border-radius:10px; font-size:13px; font-weight:600; opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; z-index:100; }
     .toast.show { opacity:1; transform:translateY(0); }
-    input.error { box-shadow: 0 0 0 2px #f87171 !important; }
-    .error-msg { color:#ef4444; font-size:11px; margin-top:3px; display:none; }
-    .error-msg.show { display:block; }
-    .pw-wrap { position:relative; }
+
+    input:focus { outline: none; box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6 !important; }
+    input.error { border-color: #f87171 !important; box-shadow: 0 0 0 2px #fca5a5 !important; }
+    .error-msg { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
+    .error-msg.show { display: block; }
+
+    .pw-wrap { position: relative; }
     .toggle-pw { position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9ca3af; padding:0; }
-    .toggle-pw:hover { color:#ec4899; }
-    .strength-bar { height:4px; border-radius:2px; margin-top:6px; transition:all 0.3s; width:0%; }
-
-    .input-field {
-      width: 100%; background: #f0f0f0;
-      border: 1px solid #ddd; border-radius: 8px;
-      padding: 10px 14px; font-size: 14px;
-      font-family: 'Fahkwang', sans-serif;
-      outline: none; transition: box-shadow 0.2s, border-color 0.2s;
-    }
-    .input-field:focus { box-shadow: 0 0 0 2px #f472b6; border-color: #f472b6; }
-    .input-field.error { box-shadow: 0 0 0 2px #f87171; border-color: #f87171; }
-
-    .confirm-btn {
-      background: #ec4899; color: white;
-      border: 1px solid #be185d; border-radius: 8px;
-      padding: 9px 0; width: 50%;
-      font-family: 'Fahkwang', sans-serif;
-      font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .confirm-btn:hover { background: #db2777; transform: translateY(-1px); }
-    .cancel-btn {
-      background: #d1d5db; color: #111;
-      border: 1px solid #000; border-radius: 8px;
-      padding: 9px 0; width: 50%;
-      font-family: 'Fahkwang', sans-serif;
-      font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .cancel-btn:hover { background: #9ca3af; transform: translateY(-1px); }
+    .toggle-pw:hover { color: #ec4899; }
   </style>
 </head>
 <body>
 
-  <!-- Pink Header -->
+  <!-- Header -->
   <div class="bg-pink-400 px-5 py-4 flex items-center flex-shrink-0">
     <button onclick="history.back()" class="text-white">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
@@ -76,68 +44,49 @@
     <!-- Left Panel -->
     <div style="width:700px; min-width:700px; background:white; display:flex; flex-direction:column; align-items:flex-start; padding:36px 40px; box-shadow:2px 0 8px rgba(0,0,0,0.06);">
 
-      <img src="/Photo/logo.jpg" alt="Ms Charm Beauty Salon" style="width:160px; object-fit:contain; margin-bottom:28px;" />
-
-      <h2 style="font-size:1.5rem; font-weight:700; color:#1a1a1a; margin:0 0 24px 0;">สมัครสมาชิก</h2>
+      <img src="/Photo/logo.jpg" alt="Logo" style="width:160px; object-fit:contain; margin-bottom:32px;" />
 
       <!-- Username -->
-      <div style="width:100%; margin-bottom:14px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">ป้อนชื่อผู้ใช้ของคุณ</label>
-        <input id="reg-username" type="text" placeholder="ชื่อผู้ใช้" class="input-field"
-          oninput="clearErr('reg-username','err-username')" />
-        <p class="error-msg" id="err-username"></p>
+      <div style="width:100%; margin-bottom:16px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">Enter your username</label>
+        <input id="username" type="text" placeholder="username"
+          style="width:100%; background:#f0f0f0; border:1px solid #ddd; border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Fahkwang',sans-serif;"
+          oninput="clearErr('username','username-error')"
+          onkeydown="if(event.key==='Enter') document.getElementById('password').focus()" />
+        <p class="error-msg" id="username-error">กรุณากรอก username</p>
       </div>
 
       <!-- Password -->
-      <div style="width:100%; margin-bottom:14px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">ป้อนรหัสผ่านของคุณ</label>
+      <div style="width:100%; margin-bottom:16px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">Enter your password</label>
         <div class="pw-wrap">
-          <input id="reg-password" type="password" placeholder="รหัสผ่าน" class="input-field"
-            oninput="clearErr('reg-password','err-password'); checkStrength()" />
-          <button class="toggle-pw" onclick="togglePw('reg-password','eye1')">
-            <svg id="eye1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <input id="password" type="password" placeholder="password"
+            style="width:100%; background:#f0f0f0; border:1px solid #ddd; border-radius:8px; padding:10px 14px; font-size:14px; font-family:'Fahkwang',sans-serif;"
+            oninput="clearErr('password','password-error')"
+            onkeydown="if(event.key==='Enter') doLogin()" />
+          <button class="toggle-pw" onclick="togglePw()" title="แสดง/ซ่อน">
+            <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
             </svg>
           </button>
         </div>
-        <div style="background:#e5e7eb; border-radius:2px; height:4px; margin-top:6px;">
-          <div id="strengthBar" class="strength-bar"></div>
-        </div>
-        <p id="strengthText" class="text-xs mt-1 text-gray-400" style="font-size:11px; margin-top:4px; color:#9ca3af;"></p>
-        <p style="color:#ec4899; font-size:11px; margin-top:4px;">รหัสผ่านเป็นตัวอักษร A-Z และตัวเลข 1-9 ต้องมีอักขระพิเศษ และจำนวนของรหัสผ่านขั้นต่ำ 8 ตัวอักษร</p>
-        <p class="error-msg" id="err-password"></p>
+        <p class="error-msg" id="password-error">กรุณากรอกรหัสผ่าน</p>
       </div>
 
-      <!-- Confirm Password -->
-      <div style="width:100%; margin-bottom:14px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">ยืนยันรหัสผ่านของคุณ</label>
-        <div class="pw-wrap">
-          <input id="reg-confirm" type="password" placeholder="ยืนยันรหัสผ่าน" class="input-field"
-            oninput="clearErr('reg-confirm','err-confirm')" />
-          <button class="toggle-pw" onclick="togglePw('reg-confirm','eye2')">
-            <svg id="eye2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
-        </div>
-        <p class="error-msg" id="err-confirm"></p>
-      </div>
-
-      <!-- Email -->
-      <div style="width:100%; margin-bottom:32px;">
-        <label style="display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:6px;">ป้อน E-mail ของคุณ</label>
-        <input id="reg-email" type="email" placeholder="E-mail" class="input-field"
-          oninput="clearErr('reg-email','err-email')"
-          onkeydown="if(event.key==='Enter') doRegister()" />
-        <p class="error-msg" id="err-email"></p>
+      <!-- Forgot Password -->
+      <div style="width:100%; text-align:right; margin-bottom:28px;">
+        <a href="/customer/recovery/recovery.html" style="font-size:12px; color:#ec4899; text-decoration:none;">Forgot password?</a>
       </div>
 
       <!-- Buttons -->
       <div style="display:flex; gap:12px; width:100%;">
-        <a href="/customer/login2/login1.html"style=width:50%;">
-          <button class="cancel-btn" style="width:100%;">ยกเลิก</button>
+        <a href="/customer/register/register1.html" style="width:50%;">
+          <button style="width:100%; background:#fce7f3; border:1px solid #000; border-radius:8px; padding:9px 0; font-size:14px; font-weight:600; cursor:pointer;">Sign up</button>
         </a>
-        <button id="registerBtn" onclick="doRegister()" class="confirm-btn">ยืนยัน</button>
+        <button id="loginBtn" onclick="doLogin()"
+          style="width:50%; background:#fce7f3; border:1px solid #000; border-radius:8px; padding:9px 0; font-size:14px; font-weight:600; cursor:pointer;">
+          Log in
+        </button>
       </div>
 
     </div>
@@ -152,8 +101,7 @@
   </div>
 
   <div class="toast" id="toast"></div>
-
-  <script src="register.js"></script>
+  <script src="/customer/login2/login1.js"></script>
 
 </body>
 </html>

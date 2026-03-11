@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>ประวัติการทำรายการ</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>รายละเอียดการจอง</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-white font-sans">
 
   <header class="bg-pink-400 h-20 flex items-center px-6">
@@ -17,7 +16,6 @@
   </header>
 
   <div class="flex min-h-screen">
-
     <div class="w-48 bg-pink-200 flex flex-col items-center pt-6 flex-shrink-0 border-r border-pink-200">
       <img src="/Photo/logo.jpg" alt="NS Charm Logo" class="w-36 object-contain" />
     </div>
@@ -32,21 +30,19 @@
           <div class="flex gap-10 mb-6">
             <div>
               <p class="font-semibold mb-2">วันที่</p>
-              <input type="date" value="2025-12-20"
-                class="rounded-full px-4 py-1 shadow border">
+              <input type="date" id="cancel-date" class="rounded-full px-4 py-1 shadow border" readonly>
             </div>
             <div>
               <p class="font-semibold mb-2">เวลา</p>
-              <input type="text" value="13.00"
-                class="rounded-full px-4 py-1 shadow border w-40">
+              <input type="text" id="cancel-time" class="rounded-full px-4 py-1 shadow border w-40" readonly>
             </div>
           </div>
 
           <div>
             <p class="font-semibold mb-3">บริการ</p>
             <div class="bg-pink-200 rounded-3xl p-6 flex justify-between items-center shadow-md">
-              <span class="text-lg">ย้อมสีผม</span>
-              <span class="font-semibold">350 บาท</span>
+              <span class="text-lg" id="cancel-service"></span>
+              <span class="font-semibold" id="cancel-price"></span>
             </div>
           </div>
 
@@ -59,22 +55,19 @@
 
           <div class="flex justify-end mt-8">
             <button id="cancelBtn" onclick="handleCancel()"
-              class="bg-white px-6 py-2 rounded-full shadow-md text-red-600 font-semibold hover:bg-red-50 transition inline-block">
+              class="bg-white px-6 py-2 rounded-full shadow-md text-red-600 font-semibold hover:bg-red-50 transition">
               ยกเลิก
             </button>
           </div>
 
         </div>
-
         <hr class="mt-10 border-gray-400">
-
       </div>
     </div>
   </div>
 
   <!-- Modal ยืนยัน -->
-  <div id="confirmModal"
-    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-3xl shadow-2xl p-10 w-80 text-center">
       <p class="text-xl font-bold text-gray-800 mb-2">ยืนยันการยกเลิก</p>
       <p class="text-sm text-gray-500 mb-8">คุณต้องการยกเลิกการจองนี้ใช่หรือไม่?</p>
@@ -91,9 +84,6 @@
     </div>
   </div>
 
-  <script src="Cancel.js">
-
-  </script>
-
+  <script src="/History/Cancel.js"></script>
 </body>
 </html>

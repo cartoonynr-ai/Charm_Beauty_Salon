@@ -1,3 +1,5 @@
+// ===== register.js =====
+
 // ===== Toggle Password =====
 function togglePw(inputId, iconId) {
   const input = document.getElementById(inputId);
@@ -35,7 +37,7 @@ function checkStrength() {
   txt.style.color      = levels[score].color;
 }
 
-// ===== Validation =====
+// ===== Validation helpers =====
 function clearErr(inputId, errId) {
   document.getElementById(inputId).classList.remove('error');
   document.getElementById(errId).classList.remove('show');
@@ -78,10 +80,11 @@ function doRegister() {
   }
   if (!ok) return;
 
-  // บันทึกลง localStorage
-  localStorage.setItem('charm_username', username);
-  localStorage.setItem('charm_email',    email);
-  localStorage.setItem('charm_logged_in','true');
+  // บันทึกลง localStorage โดยตรง
+  localStorage.setItem('charm_username',  username);
+  localStorage.setItem('charm_email',     email);
+  localStorage.setItem('charm_password',  password);
+  localStorage.setItem('charm_logged_in', 'true');
 
   const btn = document.getElementById('registerBtn');
   btn.innerHTML = '<span class="spinner"></span>';
@@ -92,7 +95,7 @@ function doRegister() {
     btn.disabled  = false;
     showToast('✅ สมัครสมาชิกสำเร็จ', '#10b981');
     setTimeout(() => {
-      window.location.href = '/customer/login/login.html';
+      window.location.href = '/customer/login2/login1.html';
     }, 1200);
   }, 1200);
 }
@@ -100,7 +103,7 @@ function doRegister() {
 // ===== Toast =====
 function showToast(msg, color = '#10b981') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.textContent      = msg;
   t.style.background = color;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
