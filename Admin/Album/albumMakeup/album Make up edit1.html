@@ -2,344 +2,123 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>Album Make up | Charm Beauty</title>
+  <title>Admin - Album | Charm Beauty</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: white; border-radius: 1.5rem; max-width: 500px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-box::-webkit-scrollbar { width: 6px; }
+    .modal-box::-webkit-scrollbar-track { background: #fce7f3; }
+    .modal-box::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 3px; }
+    input[type="text"]:focus, textarea:focus { outline: none; border-color: #f472b6 !important; box-shadow: 0 0 0 3px rgba(244,114,182,0.2); }
+    .pill-input { background: transparent; border: none;  color: #374151; font-weight: 600; outline: none; width: 140px; text-align: center; font-size: 1rem; }
+    .pill-input:focus {  }
+    .footer-input { background: transparent; border: none; border-bottom: 1px dashed rgba(255,255,255,0.5); color: white; font-weight: 700; font-size: 1.125rem; outline: none; width: 180px; }
+    .footer-input:focus { border-bottom: 1px solid white; }
+    .footer-sub-input { background: transparent; border: none; border-bottom: 1px dashed rgba(255,255,255,0.4); color: rgba(255,255,255,0.85); font-size: 0.875rem; outline: none; width: 120px; }
+    .footer-sub-input:focus { border-bottom: 1px solid rgba(255,255,255,0.8); }
+  </style>
 </head>
-
 <body class="bg-[#FFE6EA]">
 
-<!-- ================= HEADER ================= -->
 <header class="bg-pink-400 h-20 px-10 flex items-center">
-
-  <!-- Left : Logo -->
- <div class="flex items-center gap-4">
+  <div class="flex items-center gap-4">
     <a href="main loged.html" class="flex items-center">
-      <img
-        src="/Photo/logo.jpg"
-        alt="Charm Beauty Logo"
-        class="h-28 mr-6 pt-6 object-contain"
-      />
+      <img src="/Photo/logo.jpg" alt="Charm Beauty Logo" class="h-28 mr-6 pt-6 object-contain"/>
     </a>
   </div>
-  <!-- Center : Menu -->
   <nav class="flex-1 flex justify-center gap-12 text-white font-medium">
     <a href="/Admin/homeadmin/home.html" class="hover:underline">หน้าหลัก</a>
     <a href="/Admin/Album/albumNail/album Nail edit1.html" class="hover:underline">อัลบั้ม</a>
     <a href="/Admin/manageserviceday/manageserviceday.html" class="hover:underline">การจอง</a>
   </nav>
-  <!-- Right : Icons -->
   <div class="flex items-center gap-6 text-white">
-
-<!-- Notification -->
-<a href="/Admin/homeadmin/Noctification edit.html" class="relative text-white">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2a6 6 0 00-6 6v4l-2 3h16l-2-3V8a6 6 0 00-6-6z"/>
-    <circle cx="12" cy="21" r="1.5"/>
-  </svg>
-  <span class="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full"></span>
-</a>
-
-    <!-- User -->
-     <a href="/Admin/Adminprofile/manage service profile.html">
-    <button>
-
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 22c0-4 4-6 8-6s8 2 8 6"/>
-      </svg>
-    </button></a>
-
+    <a href="/Admin/homeadmin/Noctification edit.html" class="relative text-white">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a6 6 0 00-6 6v4l-2 3h16l-2-3V8a6 6 0 00-6-6z"/><circle cx="12" cy="21" r="1.5"/></svg>
+      <span class="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full"></span>
+    </a>
+    <a href="/Admin/Adminprofile/manage service profile.html">
+      <button><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-4 4-6 8-6s8 2 8 6"/></svg></button>
+    </a>
   </div>
 </header>
-<!-- ================= END HEADER ================= -->
 
-<!-- ================= TITLE ================= -->
-<section class="py-8 text-center">
-  <div class="inline-flex items-center gap-4 bg-white px-6 py-2 rounded-full shadow font-semibold">
-
-    <!-- input หัวข้อ -->
+<section class="py-6 text-center">
+  <div class="inline-flex items-center gap-4 bg-white px-6 py-2 rounded-full shadow">
+    <a href="/Admin/Album/albumHair/album Hair edit1.html" class="flex items-center justify-center w-8 h-8 rounded-full bg-pink-400 text-white hover:bg-pink-500">❮</a>
+    <input id="pageTitleInput" class="pill-input" placeholder="ชื่อหน้า" value="แต่งหน้า"/>
     
-    <!-- ปุ่มย้อนกลับ -->
-    <a href="/Admin/Album/albumHair/album Hair edit1.html"
-       class="flex items-center justify-center w-8 h-8 rounded-full bg-pink-400 text-white hover:bg-pink-500">
-      ❮
-    </a>
-
-    <input
-      type="text"
-      id="albumTitleInput"
-      placeholder="หัวข้อ"
-      class="bg-transparent outline-none text-center font-semibold w-32"
-    >
-
-
   </div>
 </section>
 
+<section class="max-w-6xl mx-auto bg-gray-300 p-6 rounded" id="albumSection"></section>
 
-<!-- ALBUM -->
- <!-- ================= ALBUM ================= -->
-<section class="max-w-6xl mx-auto bg-gray-300 p-6 rounded">
-
-  <!-- ===== กลุ่ม 1 ===== -->
-  <input
-  type="text"
-  placeholder="หัวข้อ"
-  class="albumTitle mb-4 bg-white inline-block px-4 py-1 rounded-full text-sm outline-none"
-/>
-
- <div class="grid grid-cols-3 gap-6 mb-10">
-
-    <div class="aspect-square border rounded-lg overflow-hidden relative">
-
-    <input type="file" accept="image/*"
-      class="hidden imageInput"
-      onchange="previewImage(event)">
-
-    <div onclick="this.previousElementSibling.click()"
-      class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-
-      เลือกรูปภาพ
-
-    </div>
-  </div>
-
-  <!-- COPY ด้านบนซ้ำ -->
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
+<div class="max-w-6xl mx-auto mt-4 flex justify-start px-1">
+  <button onclick="addGroup()" class="flex items-center gap-2 bg-white hover:bg-pink-50 text-pink-500 border border-pink-300 px-5 py-2 rounded-full text-sm font-medium shadow transition">
+    + เพิ่มหมวดหมู่
+  </button>
 </div>
-
-  <!-- ===== กลุ่ม 2 ===== -->
-  <input
-  type="text"
-  placeholder="หัวข้อ"
-  class="albumTitle mb-4 bg-white inline-block px-4 py-1 rounded-full text-sm outline-none"
-/>
-
- <div class="grid grid-cols-3 gap-6 mb-10">
-
-    <div class="aspect-square border rounded-lg overflow-hidden relative">
-
-    <input type="file" accept="image/*"
-      class="hidden imageInput"
-      onchange="previewImage(event)">
-
-    <div onclick="this.previousElementSibling.click()"
-      class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-
-      เลือกรูปภาพ
-
-    </div>
-  </div>
-
-  <!-- COPY ด้านบนซ้ำ -->
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-</div>
-
-  <!-- ===== กลุ่ม 3 ===== -->
-  <input
-  type="text"
-  placeholder="หัวข้อ"
-  class="albumTitle mb-4 bg-white inline-block px-4 py-1 rounded-full text-sm outline-none"
-/>
-
- <div class="grid grid-cols-3 gap-6 mb-10">
-
-    <div class="aspect-square border rounded-lg overflow-hidden relative">
-
-    <input type="file" accept="image/*"
-      class="hidden imageInput"
-      onchange="previewImage(event)">
-
-    <div onclick="this.previousElementSibling.click()"
-      class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-
-      เลือกรูปภาพ
-
-    </div>
-  </div>
-
-  <!-- COPY ด้านบนซ้ำ -->
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-  <div class="aspect-square border rounded-lg overflow-hidden relative">
-    <input type="file" accept="image/*" class="hidden imageInput" onchange="previewImage(event)">
-    <div onclick="this.previousElementSibling.click()" class="selectImage absolute inset-0 bg-gray-200
-       flex items-center justify-center
-       text-gray-500 cursor-pointer overflow-hidden">
-      เลือกรูปภาพ
-    </div>
-  </div>
-
-</div>
-</section>
 
 <div class="bg-[#FFE6EA] py-6">
   <div class="max-w-6xl mx-auto flex justify-end gap-4">
-    <button type="button" onclick="resetData()"
-    class="px-6 py-2 bg-white rounded-full text-xs shadow">
-    ยกเลิก
-    </button>
-   <button type="button" onclick="saveData()"
-    class="px-6 py-2 bg-white rounded-full text-xs shadow">
-    ยืนยัน
-    </button>
+    <button onclick="resetAll()" class="px-6 py-2 bg-white rounded-full text-xs shadow">ยกเลิก</button>
+    <button onclick="saveAll()" class="px-6 py-2 bg-pink-400 text-white rounded-full text-xs shadow">ยืนยัน</button>
   </div>
 </div>
 
-<!-- ================= FOOTER ================= -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <div class="bg-pink-400 px-6 py-4 rounded-t-2xl flex items-center justify-between">
+      <h2 class="text-white font-bold text-lg">แก้ไขข้อมูล</h2>
+      <button onclick="closeModal()" class="text-white hover:text-pink-200 text-2xl leading-none">&times;</button>
+    </div>
+    <div class="px-6 pt-5">
+      <div id="modalImgPreview" onclick="document.getElementById('modalFileInput').click()"
+        class="w-full h-52 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden mb-3 cursor-pointer border-2 border-dashed border-pink-300 hover:border-pink-400 transition">
+        <span class="text-gray-400 text-sm" id="modalImgPlaceholder">คลิกเพื่อเลือกรูปภาพ</span>
+        <img id="modalImgEl" src="" class="w-full h-full object-cover hidden"/>
+      </div>
+      <input type="file" id="modalFileInput" accept="image/*" class="hidden" onchange="handleModalFile(event)"/>
+    </div>
+    <div class="px-6 py-4 space-y-3">
+      <div><label class="text-xs text-pink-400 font-semibold uppercase tracking-wide block mb-1">ชื่อลุค</label>
+        <input id="editName" type="text" placeholder="เช่น Dewy Natural Look" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"/></div>
+      <div><label class="text-xs text-pink-400 font-semibold uppercase tracking-wide block mb-1">ราคา (บาท)</label>
+        <input id="editPrice" type="text" placeholder="เช่น 350" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"/></div>
+      <div><label class="text-xs text-pink-400 font-semibold uppercase tracking-wide block mb-1">รายละเอียด</label>
+        <textarea id="editDesc" rows="3" placeholder="อธิบายรายละเอียด..." class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none"></textarea></div>
+      <div><label class="text-xs text-pink-400 font-semibold uppercase tracking-wide block mb-1">เวลาที่ใช้โดยประมาณ</label>
+        <input id="editDuration" type="text" placeholder="เช่น 60 นาที" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"/></div>
+      <div class="flex gap-3 pt-1">
+        <button onclick="saveSlot()" class="flex-1 bg-pink-400 hover:bg-pink-500 text-white py-2 rounded-full text-sm font-medium transition">💾 บันทึก</button>
+        <button onclick="closeModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 py-2 rounded-full text-sm font-medium transition">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer class="bg-pink-400 text-white py-12 mt-10">
   <div class="flex justify-around text-sm">
-
     <div>
       <h4 class="font-bold mb-3">เกี่ยวกับ Charm Beauty & Salon</h4>
-      <p>เกี่ยวกับเรา</p>
-      <p>นโยบายความเป็นส่วนตัว</p>
-      <p>เงื่อนไขการใช้งาน</p>
+      <p>เกี่ยวกับเรา</p><p>นโยบายความเป็นส่วนตัว</p><p>เงื่อนไขการใช้งาน</p>
     </div>
-
     <div>
       <h4 class="font-bold mb-3">บริการลูกค้า</h4>
-      <p>ติดต่อเรา</p>
-      <p>บริการ Chat & Shop</p>
-      <p>คำถามที่พบบ่อย</p>
+      <p>ติดต่อเรา</p><p>บริการ Chat & Shop</p><p>คำถามที่พบบ่อย</p>
     </div>
-
-    <div class="font-bold text-lg self-end">
-      Charm Beauty & Salon<br />
-      <span class="text-sm font-normal">ร้านทำเล็บ</span>
+    <div class="self-end">
+      <input id="footerMainInput" class="footer-input" placeholder="ชื่อร้าน" value="Charm Beauty & Salon"/><br/>
+      <input id="footerSubInput" class="footer-sub-input mt-1" placeholder="คำบรรยาย" value="ร้านทำเล็บ"/>
     </div>
-
   </div>
 </footer>
-<!-- ================= END FOOTER ================= -->
-<script src="Makeup.Js"></script>
+
+<script src="/Admin/Album/albumMakeup/Makeup.Js">
+
+</script>
 </body>
 </html>

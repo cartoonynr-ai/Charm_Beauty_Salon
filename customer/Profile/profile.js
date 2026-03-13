@@ -58,7 +58,7 @@ function confirmLogout() {
   closeLogoutModal();
   showToast('👋 ออกจากระบบแล้ว', '#6366f1');
   setTimeout(() => {
-    window.location.href = '/customer/login2/login1.html';
+    window.location.href = '/customer/login/login.html';
   }, 1200);
 }
 
